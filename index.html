@@ -41,7 +41,7 @@
 </head>
 <body class="bg-darkBg text-slate-100 min-h-screen flex flex-col selection:bg-blue-500 selection:text-white">
 
-    <!-- COMPACT NAVIGATION TOOLBAR (ĐÃ BỎ HEADER LỚN) -->
+    <!-- NAVIGATION TOOLBAR -->
     <header class="glass-header sticky top-0 z-50 px-4 lg:px-6 py-2.5">
         <div class="max-w-[1920px] mx-auto flex flex-col md:flex-row justify-between items-center gap-3">
             
@@ -54,10 +54,11 @@
                     <i class="fa-solid fa-calendar-week"></i> Hiệu Suất Vận Hành CSKH247 - Tuần/Tháng
                 </button>
                 
-                <!-- Chỗ chờ cho 2 chức năng tương lai (sẽ tự động hiện nút khi cấu hình link) -->
+                <!-- Tab Chức năng 3 -->
                 <button onclick="switchView('extra1')" id="tab-extra1" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-2 text-slate-400 hover:text-white hidden">
                     <i class="fa-solid fa-chart-pie" id="icon-extra1"></i> <span id="label-extra1">Chức Năng 3</span>
                 </button>
+                <!-- Tab Chức năng 4 -->
                 <button onclick="switchView('extra2')" id="tab-extra2" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-2 text-slate-400 hover:text-white hidden">
                     <i class="fa-solid fa-chart-line" id="icon-extra2"></i> <span id="label-extra2">Chức Năng 4</span>
                 </button>
@@ -83,22 +84,23 @@
 
     <!-- MAIN IFRAME VIEWER CONTAINER -->
     <main class="flex-1 w-full relative flex flex-col bg-slate-950">
-        <div id="loadingOverlay" class="absolute inset-0 bg-slate-950/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center gap-3 transition-opacity duration-300">
+        <!-- Lớp phủ Loading tự động biến mất sau 1.5 giây, chống kẹt vòng quay -->
+        <div id="loadingOverlay" class="absolute inset-0 bg-slate-950/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center gap-3 transition-opacity duration-300 pointer-events-none opacity-0" style="display: none;">
             <div class="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
             <p class="text-xs text-slate-300 font-medium">Đang tải dữ liệu...</p>
         </div>
         
         <!-- IFRAME NGÀY -->
-        <iframe id="iframeDay" src="https://cskh247-daily-chp-dashboard.vercel.app/" onload="hideLoading()" class="w-full flex-1 border-0 min-h-[calc(100vh-80px)]"></iframe>
+        <iframe id="iframeDay" src="https://cskh247-daily-chp-dashboard.vercel.app/" class="w-full flex-1 border-0 min-h-[calc(100vh-80px)]"></iframe>
         
         <!-- IFRAME TUẦN/THÁNG -->
-        <iframe id="iframeWeek" src="https://cskh-monthly-haiphong-dashboard.vercel.app/" onload="hideLoading()" class="w-full flex-1 border-0 min-h-[calc(100vh-80px)] hidden"></iframe>
+        <iframe id="iframeWeek" src="https://cskh-monthly-haiphong-dashboard.vercel.app/" class="w-full flex-1 border-0 min-h-[calc(100vh-80px)] hidden"></iframe>
         
-        <!-- IFRAME CHỨC NĂNG 3 (TƯƠNG LAI) -->
-        <iframe id="iframeExtra1" src="" onload="hideLoading()" class="w-full flex-1 border-0 min-h-[calc(100vh-80px)] hidden"></iframe>
+        <!-- IFRAME CHỨC NĂNG 3 -->
+        <iframe id="iframeExtra1" src="" class="w-full flex-1 border-0 min-h-[calc(100vh-80px)] hidden"></iframe>
         
-        <!-- IFRAME CHỨC NĂNG 4 (TƯƠNG LAI) -->
-        <iframe id="iframeExtra2" src="" onload="hideLoading()" class="w-full flex-1 border-0 min-h-[calc(100vh-80px)] hidden"></iframe>
+        <!-- IFRAME CHỨC NĂNG 4 -->
+        <iframe id="iframeExtra2" src="" class="w-full flex-1 border-0 min-h-[calc(100vh-80px)] hidden"></iframe>
     </main>
 
     <!-- MODAL CẤU HÌNH LINK & Ô TRỐNG THÊM TÍNH NĂNG (MẬT KHẨU 6868) -->
@@ -135,17 +137,17 @@
                         <input type="text" id="inputUrlWeek" class="w-full bg-slate-900 border border-slate-700 text-xs rounded-xl px-3 py-2 text-slate-200">
                     </div>
 
-                    <!-- Ô TRỐNG CHO TÍNH NĂNG 3 TRONG TƯƠNG LAI -->
+                    <!-- Ô TRỐNG CHO TÍNH NĂNG 3 -->
                     <div class="space-y-2 border-b border-slate-800 pb-3 bg-slate-900/40 p-3 rounded-xl border border-dashed border-slate-700">
                         <h4 class="text-xs font-bold text-amber-400">3. Chức Năng Bổ Sung 1 (Tùy chọn tương lai)</h4>
-                        <input type="text" id="inputNameExtra1" placeholder="Nhập tên mô tả nút (VD: Báo cáo CSAT)..." class="w-full bg-slate-900 border border-slate-700 text-xs rounded-xl px-3 py-2 text-slate-200 mb-2">
+                        <input type="text" id="inputNameExtra1" placeholder="Nhập tên mô tả nút..." class="w-full bg-slate-900 border border-slate-700 text-xs rounded-xl px-3 py-2 text-slate-200 mb-2">
                         <input type="text" id="inputUrlExtra1" placeholder="Nhập Link URL hiển thị..." class="w-full bg-slate-900 border border-slate-700 text-xs rounded-xl px-3 py-2 text-slate-200">
                     </div>
 
-                    <!-- Ô TRỐNG CHO TÍNH NĂNG 4 TRONG TƯƠNG LAI -->
+                    <!-- Ô TRỐNG CHO TÍNH NĂNG 4 -->
                     <div class="space-y-2 bg-slate-900/40 p-3 rounded-xl border border-dashed border-slate-700">
                         <h4 class="text-xs font-bold text-amber-400">4. Chức Năng Bổ Sung 2 (Tùy chọn tương lai)</h4>
-                        <input type="text" id="inputNameExtra2" placeholder="Nhập tên mô tả nút (VD: Nhật ký sự cố)..." class="w-full bg-slate-900 border border-slate-700 text-xs rounded-xl px-3 py-2 text-slate-200 mb-2">
+                        <input type="text" id="inputNameExtra2" placeholder="Nhập tên mô tả nút..." class="w-full bg-slate-900 border border-slate-700 text-xs rounded-xl px-3 py-2 text-slate-200 mb-2">
                         <input type="text" id="inputUrlExtra2" placeholder="Nhập Link URL hiển thị..." class="w-full bg-slate-900 border border-slate-700 text-xs rounded-xl px-3 py-2 text-slate-200">
                     </div>
 
@@ -191,6 +193,8 @@
 
         function switchView(mode) {
             const tabs = ['day', 'week', 'extra1', 'extra2'];
+            showLoading(); // Hiệu ứng xoay mượt mà khi đổi tab
+
             tabs.forEach(t => {
                 const btn = document.getElementById(`tab-${t}`);
                 const iframe = document.getElementById(`iframe${t.charAt(0).toUpperCase() + t.slice(1)}`);
@@ -198,7 +202,6 @@
                     if (btn) btn.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-2 bg-blue-600 text-white shadow-md";
                     if (iframe) {
                         iframe.classList.remove('hidden');
-                        showLoading();
                         updateStatusText(iframe.src);
                     }
                 } else {
@@ -210,14 +213,16 @@
 
         function showLoading() {
             const overlay = document.getElementById('loadingOverlay');
-            overlay.classList.remove('opacity-0', 'pointer-events-none');
             overlay.style.display = 'flex';
-        }
+            overlay.classList.remove('opacity-0');
+            overlay.classList.add('opacity-100');
 
-        function hideLoading() {
-            const overlay = document.getElementById('loadingOverlay');
-            overlay.classList.add('opacity-0', 'pointer-events-none');
-            setTimeout(() => { overlay.style.display = 'none'; }, 300);
+            // Tự động tắt loading sau 1.2 giây để tránh bị kẹt màn hình reload mãi
+            setTimeout(() => {
+                overlay.classList.remove('opacity-100');
+                overlay.classList.add('opacity-0');
+                setTimeout(() => { overlay.style.display = 'none'; }, 300);
+            }, 1200);
         }
 
         function updateStatusText(url) {
