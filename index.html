@@ -78,7 +78,7 @@
     <div class="bg-slate-900/40 border-b border-slate-800/60 py-1.5 px-6 text-[11px] text-slate-400 flex justify-between items-center">
         <div class="flex items-center gap-2">
             <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>Ổn định.</span>
+            <span>OK</span>
         </div>
         <div class="flex items-center gap-3">
             <span id="currentActiveLinkText" class="text-slate-400 truncate max-w-sm">Đang tải URL...</span>
@@ -241,7 +241,7 @@
         }
 
         function updateStatusText(url) {
-            document.getElementById('currentActiveLinkText').innerText = `Đang hiển thị nguồn: ${url}`;
+            document.getElementById('currentActiveLinkText').innerText = `Nguồn: ${url}`;
             document.getElementById('openNewTabBtn').href = url;
         }
 
