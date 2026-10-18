@@ -47,7 +47,7 @@
             
             <!-- View Switcher Tabs -->
             <div class="flex flex-wrap items-center gap-1.5 bg-slate-900/90 border border-slate-800 p-1 rounded-xl shadow-inner">
-                <button onclick="switchView('day')" id="tab-day" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-2 bg-blue-600 text-white shadow-md">
+                <button onclick="switchView('day')" id="tab-day" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-2 text-slate-400 hover:text-white">
                     <i class="fa-solid fa-calendar-day"></i> Hiệu Suất Vận Hành CSKH247 - Ngày
                 </button>
                 <button onclick="switchView('week')" id="tab-week" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-2 text-slate-400 hover:text-white">
@@ -84,17 +84,17 @@
 
     <!-- MAIN IFRAME VIEWER CONTAINER -->
     <main class="flex-1 w-full relative flex flex-col bg-slate-950">
-        <!-- Lớp phủ Loading tự động biến mất sau 1.5 giây, chống kẹt vòng quay -->
+        <!-- Lớp phủ Loading -->
         <div id="loadingOverlay" class="absolute inset-0 bg-slate-950/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center gap-3 transition-opacity duration-300 pointer-events-none opacity-0" style="display: none;">
             <div class="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
             <p class="text-xs text-slate-300 font-medium">Đang tải dữ liệu...</p>
         </div>
         
         <!-- IFRAME NGÀY -->
-        <iframe id="iframeDay" src="https://cskh247-daily-chp-dashboard.vercel.app/" class="w-full flex-1 border-0 min-h-[calc(100vh-80px)]"></iframe>
+        <iframe id="iframeDay" src="" class="w-full flex-1 border-0 min-h-[calc(100vh-80px)] hidden"></iframe>
         
         <!-- IFRAME TUẦN/THÁNG -->
-        <iframe id="iframeWeek" src="https://cskh-monthly-haiphong-dashboard.vercel.app/" class="w-full flex-1 border-0 min-h-[calc(100vh-80px)] hidden"></iframe>
+        <iframe id="iframeWeek" src="" class="w-full flex-1 border-0 min-h-[calc(100vh-80px)] hidden"></iframe>
         
         <!-- IFRAME CHỨC NĂNG 3 -->
         <iframe id="iframeExtra1" src="" class="w-full flex-1 border-0 min-h-[calc(100vh-80px)] hidden"></iframe>
@@ -188,12 +188,28 @@
                 document.getElementById('tab-extra2').classList.remove('hidden');
             }
 
-            updateStatusText(savedDay);
+            // Đọc trạng thái tab đang chọn gần nhất từ localStorage (Mặc định là 'day' nếu chưa có)
+            const lastActiveTab = localStorage.getItem('cskh_active_tab') || 'day';
+            switchView(lastActiveTab, false);
         });
 
-        function switchView(mode) {
+        function switchView(mode, saveState = true) {
             const tabs = ['day', 'week', 'extra1', 'extra2'];
-            showLoading(); // Hiệu ứng xoay mượt mà khi đổi tab
+            
+            // Nếu tab được chọn chưa có src (trường hợp tab phụ chưa cấu hình), không cho chuyển
+            const targetIframe = document.getElementById(`iframe${mode.charAt(0).toUpperCase() + mode.slice(1)}`);
+            if (!targetIframe || !targetIframe.src || targetIframe.src === window.location.href) {
+                if (mode === 'extra1' || mode === 'extra2') {
+                    alert("Chức năng này chưa được cấu hình đường dẫn link!");
+                    return;
+                }
+            }
+
+            if (saveState) {
+                showLoading();
+                // Lưu lại tab đang chọn vào localStorage để giữ nguyên trạng thái khi reload
+                localStorage.setItem('cskh_active_tab', mode);
+            }
 
             tabs.forEach(t => {
                 const btn = document.getElementById(`tab-${t}`);
@@ -217,12 +233,11 @@
             overlay.classList.remove('opacity-0');
             overlay.classList.add('opacity-100');
 
-            // Tự động tắt loading sau 1.2 giây để tránh bị kẹt màn hình reload mãi
             setTimeout(() => {
                 overlay.classList.remove('opacity-100');
                 overlay.classList.add('opacity-0');
                 setTimeout(() => { overlay.style.display = 'none'; }, 300);
-            }, 1200);
+            }, 1000);
         }
 
         function updateStatusText(url) {
