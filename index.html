@@ -25,18 +25,8 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         body { font-family: 'Inter', sans-serif; overflow-x: hidden; }
         
-        /* HIỆU ỨNG TỰ ĐỘNG THU GỌN VÀ HIỆN LÊN KHI TRỎ VÀO MÉP TRÊN */
-        .auto-hide-header {
-            transform: translateY(-85%); /* Thu gọn ẩn lên trên, chỉ để lộ một phần mép nhỏ */
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
-        }
-        .auto-hide-header:hover {
-            transform: translateY(0); /* Trỏ chuột vào mép trên sẽ trượt xuống hiện đầy đủ */
-            background: rgba(11, 15, 25, 0.98);
-        }
-
         .glass-header {
-            background: rgba(11, 15, 25, 0.9);
+            background: rgba(11, 15, 25, 0.95);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
@@ -52,13 +42,13 @@
 </head>
 <body class="bg-darkBg text-slate-100 min-h-screen flex flex-col selection:bg-blue-500 selection:text-white">
 
-    <!-- NAVIGATION TOOLBAR (TỰ ĐỘNG THU GỌN, TRỎ VÀO MÉP TRÊN SẼ HIỆN LÊN) -->
-    <header class="glass-header auto-hide-header sticky top-0 z-50 px-4 lg:px-6 py-2 shadow-2xl">
+    <!-- NAVIGATION TOOLBAR (HIỂN THỊ CỐ ĐỊNH RÕ RÀNG, KHÔNG BỊ ẨN KHUẤT) -->
+    <header class="glass-header sticky top-0 z-50 px-4 lg:px-6 py-2.5 shadow-2xl">
         <div class="max-w-[1920px] mx-auto flex flex-col md:flex-row justify-between items-center gap-3">
             
             <!-- View Switcher Tabs -->
             <div class="flex flex-wrap items-center gap-1.5 bg-slate-900/90 border border-slate-800 p-1 rounded-xl shadow-inner">
-                <button onclick="switchView('day')" id="tab-day" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-2 text-slate-400 hover:text-white">
+                <button onclick="switchView('day')" id="tab-day" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-2 bg-blue-600 text-white shadow-md">
                     <i class="fa-solid fa-calendar-day"></i> Hiệu Suất Vận Hành CSKH247 - Ngày
                 </button>
                 <button onclick="switchView('week')" id="tab-week" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition flex items-center gap-2 text-slate-400 hover:text-white">
@@ -77,7 +67,6 @@
 
             <!-- Settings / Config Link Button -->
             <div class="flex items-center gap-2">
-                <span class="text-[10px] text-slate-400 hidden xl:inline-block"><i class="fa-solid fa-arrow-pointer mr-1"></i> Trỏ chuột lên mép trên để mở menu</span>
                 <button onclick="openConfigModal()" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs font-medium transition flex items-center gap-2 shadow-sm">
                     <i class="fa-solid fa-gear text-amber-400"></i> Cấu Hình Link (6868)
                 </button>
@@ -85,37 +74,41 @@
         </div>
     </header>
 
-    <!-- STATUS BAR -->
-    <div class="bg-slate-900/40 border-b border-slate-800/60 py-1 px-6 text-[11px] text-slate-400 flex justify-between items-center">
+    <!-- STATUS BAR & QUICK ACTIONS -->
+    <div class="bg-slate-900/40 border-b border-slate-800/60 py-1.5 px-6 text-[11px] text-slate-400 flex justify-between items-center">
         <div class="flex items-center gap-2">
             <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>Hệ thống giám sát trực tuyến đang hoạt động.</span>
+            <span>Hệ thống giám sát trực tuyến đang hoạt động ổn định.</span>
         </div>
-        <div id="currentActiveLinkText" class="text-slate-500 truncate max-w-md">Đang tải URL...</div>
+        <div class="flex items-center gap-3">
+            <span id="currentActiveLinkText" class="text-slate-400 truncate max-w-sm">Đang tải URL...</span>
+            <a id="openNewTabBtn" href="#" target="_blank" class="px-2 py-0.5 bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 border border-blue-500/30 rounded text-[10px] transition flex items-center gap-1">
+                <i class="fa-solid fa-external-link-alt"></i> Mở tab mới
+            </a>
+        </div>
     </div>
 
-    <!-- MAIN IFRAME VIEWER CONTAINER -->
+    <!-- MAIN VIEWER CONTAINER -->
     <main class="flex-1 w-full relative flex flex-col bg-slate-950">
-        <!-- Lớp phủ Loading -->
         <div id="loadingOverlay" class="absolute inset-0 bg-slate-950/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center gap-3 transition-opacity duration-300 pointer-events-none opacity-0" style="display: none;">
             <div class="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
             <p class="text-xs text-slate-300 font-medium">Đang tải dữ liệu...</p>
         </div>
         
         <!-- IFRAME NGÀY -->
-        <iframe id="iframeDay" src="" class="w-full flex-1 border-0 min-h-[calc(100vh-80px)] hidden"></iframe>
+        <iframe id="iframeDay" src="" class="w-full flex-1 border-0 min-h-[calc(100vh-90px)] hidden"></iframe>
         
         <!-- IFRAME TUẦN/THÁNG -->
-        <iframe id="iframeWeek" src="" class="w-full flex-1 border-0 min-h-[calc(100vh-80px)] hidden"></iframe>
+        <iframe id="iframeWeek" src="" class="w-full flex-1 border-0 min-h-[calc(100vh-90px)] hidden"></iframe>
         
         <!-- IFRAME CHỨC NĂNG 3 -->
-        <iframe id="iframeExtra1" src="" class="w-full flex-1 border-0 min-h-[calc(100vh-80px)] hidden"></iframe>
+        <iframe id="iframeExtra1" src="" class="w-full flex-1 border-0 min-h-[calc(100vh-90px)] hidden"></iframe>
         
         <!-- IFRAME CHỨC NĂNG 4 -->
-        <iframe id="iframeExtra2" src="" class="w-full flex-1 border-0 min-h-[calc(100vh-80px)] hidden"></iframe>
+        <iframe id="iframeExtra2" src="" class="w-full flex-1 border-0 min-h-[calc(100vh-90px)] hidden"></iframe>
     </main>
 
-    <!-- MODAL CẤU HÌNH LINK & Ô TRỐNG THÊM TÍNH NĂNG (MẬT KHẨU 6868) -->
+    <!-- MODAL CẤU HÌNH LINK (MẬT KHẨU 6868) -->
     <div id="configModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
         <div class="glass-card w-full max-w-lg rounded-2xl border border-slate-700 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
             <div class="bg-slate-900 px-5 py-4 border-b border-slate-800 flex justify-between items-center">
@@ -137,7 +130,7 @@
                 </div>
 
                 <div id="configFormSection" class="space-y-4 hidden">
-                    <p class="text-xs text-emerald-400 font-medium"><i class="fa-solid fa-check-circle mr-1"></i> Xác thực thành công! Bạn có thể chỉnh sửa link hoặc thêm tính năng mới:</p>
+                    <p class="text-xs text-emerald-400 font-medium"><i class="fa-solid fa-check-circle mr-1"></i> Xác thực thành công! Bạn có thể chỉnh sửa link:</p>
                     
                     <div class="space-y-3 border-b border-slate-800 pb-3">
                         <h4 class="text-xs font-bold text-blue-400">1. Hiệu Suất Vận Hành CSKH247 - Ngày</h4>
@@ -149,18 +142,16 @@
                         <input type="text" id="inputUrlWeek" class="w-full bg-slate-900 border border-slate-700 text-xs rounded-xl px-3 py-2 text-slate-200">
                     </div>
 
-                    <!-- Ô TRỐNG CHO TÍNH NĂNG 3 -->
                     <div class="space-y-2 border-b border-slate-800 pb-3 bg-slate-900/40 p-3 rounded-xl border border-dashed border-slate-700">
-                        <h4 class="text-xs font-bold text-amber-400">3. Chức Năng Bổ Sung 1 (Tùy chọn tương lai)</h4>
+                        <h4 class="text-xs font-bold text-amber-400">3. Chức Năng Bổ Sung 1</h4>
                         <input type="text" id="inputNameExtra1" placeholder="Nhập tên mô tả nút..." class="w-full bg-slate-900 border border-slate-700 text-xs rounded-xl px-3 py-2 text-slate-200 mb-2">
-                        <input type="text" id="inputUrlExtra1" placeholder="Nhập Link URL hiển thị..." class="w-full bg-slate-900 border border-slate-700 text-xs rounded-xl px-3 py-2 text-slate-200">
+                        <input type="text" id="inputUrlExtra1" placeholder="Nhập Link URL..." class="w-full bg-slate-900 border border-slate-700 text-xs rounded-xl px-3 py-2 text-slate-200">
                     </div>
 
-                    <!-- Ô TRỐNG CHO TÍNH NĂNG 4 -->
                     <div class="space-y-2 bg-slate-900/40 p-3 rounded-xl border border-dashed border-slate-700">
-                        <h4 class="text-xs font-bold text-amber-400">4. Chức Năng Bổ Sung 2 (Tùy chọn tương lai)</h4>
+                        <h4 class="text-xs font-bold text-amber-400">4. Chức Năng Bổ Sung 2</h4>
                         <input type="text" id="inputNameExtra2" placeholder="Nhập tên mô tả nút..." class="w-full bg-slate-900 border border-slate-700 text-xs rounded-xl px-3 py-2 text-slate-200 mb-2">
-                        <input type="text" id="inputUrlExtra2" placeholder="Nhập Link URL hiển thị..." class="w-full bg-slate-900 border border-slate-700 text-xs rounded-xl px-3 py-2 text-slate-200">
+                        <input type="text" id="inputUrlExtra2" placeholder="Nhập Link URL..." class="w-full bg-slate-900 border border-slate-700 text-xs rounded-xl px-3 py-2 text-slate-200">
                     </div>
 
                     <div class="pt-2 flex justify-end gap-2">
@@ -208,7 +199,7 @@
             const tabs = ['day', 'week', 'extra1', 'extra2'];
             
             const targetIframe = document.getElementById(`iframe${mode.charAt(0).toUpperCase() + mode.slice(1)}`);
-            if (!targetIframe || !targetIframe.src || targetIframe.src === window.location.href) {
+            if (!targetIframe || !targetIframe.src) {
                 if (mode === 'extra1' || mode === 'extra2') {
                     alert("Chức năng này chưa được cấu hình đường dẫn link!");
                     return;
@@ -246,11 +237,12 @@
                 overlay.classList.remove('opacity-100');
                 overlay.classList.add('opacity-0');
                 setTimeout(() => { overlay.style.display = 'none'; }, 300);
-            }, 1000);
+            }, 800);
         }
 
         function updateStatusText(url) {
             document.getElementById('currentActiveLinkText').innerText = `Đang hiển thị nguồn: ${url}`;
+            document.getElementById('openNewTabBtn').href = url;
         }
 
         function openConfigModal() {
@@ -265,7 +257,7 @@
         }
 
         function verifyPasscode() {
-            const pass = document.getElementById('passcodeField'].value.trim();
+            const pass = document.getElementById('passcodeField').value.trim();
             if (pass === "6868") {
                 document.getElementById('authSection').classList.add('hidden');
                 document.getElementById('configFormSection').classList.remove('hidden');
