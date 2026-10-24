@@ -2,7 +2,7 @@
 <html lang="vi" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Dashboard Vận Hành CSKH247 - Cảng Hải Phòng</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -24,7 +24,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         html, body {
             margin: 0;
             padding: 0;
@@ -35,25 +35,20 @@
             background-color: #080c14;
         }
 
-        /* Hiệu ứng trượt ẩn / hiện mượt mà */
+        /* Khung Header trượt mượt mà */
         .auto-hide-wrapper {
-            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+            transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
             transform: translateY(0);
         }
 
-        /* Trạng thái thu gọn: Chỉ chừa dải cảm biến 6px ở mép đỉnh */
-        .auto-hide-wrapper.is-collapsed:not(.is-pinned) {
-            transform: translateY(calc(-100% + 6px));
+        /* Trạng thái thu gọn: Chỉ lộ đúng nút bấm mini ở mép */
+        .auto-hide-wrapper.is-collapsed {
+            transform: translateY(-100%);
             box-shadow: none;
         }
 
-        /* Vùng phát sáng gợi ý khi Header đang thu vào */
-        .auto-hide-wrapper.is-collapsed:not(.is-pinned) .hover-hint-line {
-            opacity: 0.9;
-        }
-
         .glass-header {
-            background: rgba(11, 15, 25, 0.92);
+            background: rgba(11, 15, 25, 0.94);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -66,7 +61,34 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Xử lý cuộn mượt cho các Dashboard nhúng bên trong */
+        /* Nút mini ẩn/hiện chủ động nằm ở mép dưới header */
+        .mini-toggle-pill {
+            position: absolute;
+            left: 50%;
+            bottom: -18px;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+            padding: 2px 14px;
+            font-size: 10px;
+            color: #94a3b8;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            cursor: pointer;
+            z-index: 60;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .mini-toggle-pill:hover, .mini-toggle-pill:active {
+            color: #38bdf8;
+            background: #0f172a;
+            border-color: rgba(56, 189, 248, 0.4);
+        }
+
+        /* Xử lý cuộn cho các dashboard con */
         .dashboard-iframe {
             width: 100%;
             height: 100%;
@@ -76,60 +98,49 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #475569; }
     </style>
 </head>
 <body class="bg-darkBg text-slate-100 h-screen w-screen flex flex-col relative select-none">
 
-    <!-- VÙNG CẢM BIẾN MỞ RỘNG (RÊ CHUỘT VÀO NỬA TRÊN CỦA TRANG HOẶC MÉP TRÊN ĐỂ HIỆN HEADER) -->
-    <div id="topTriggerZone" 
-         class="fixed top-0 left-0 right-0 h-[50px] z-40 pointer-events-auto"
-         title="Rê chuột vào đây để mở bảng điều khiển"></div>
-
-    <!-- KHU VỰC HEADER NỔI TỰ ĐỘNG THU VÀO SAU 2 GIÂY -->
+    <!-- KHU VỰC HEADER NỔI -->
     <div id="headerWrapper" class="auto-hide-wrapper fixed top-0 left-0 right-0 z-50 flex flex-col">
         
-        <!-- Header chính -->
-        <header class="glass-header px-3.5 py-1.5 shadow-2xl transition-all">
-            <div class="max-w-[1920px] mx-auto flex flex-wrap items-center justify-between gap-2">
+        <!-- Header thanh công cụ chính -->
+        <header class="glass-header px-3 py-1.5 shadow-2xl">
+            <div class="max-w-[1920px] mx-auto flex flex-wrap items-center justify-between gap-1.5">
                 
                 <!-- Nhóm các Tab điều hướng -->
-                <div class="flex items-center gap-1 bg-slate-900/90 border border-slate-800/80 p-0.5 rounded-lg shadow-inner">
-                    <button onclick="switchView('day')" id="tab-day" class="px-2.5 py-1 rounded-md text-[11px] font-medium transition flex items-center gap-1.5 bg-blue-600 text-white shadow-sm">
+                <div class="flex items-center gap-1 bg-slate-900/90 border border-slate-800/80 p-0.5 rounded-lg shadow-inner overflow-x-auto max-w-full">
+                    <button onclick="switchView('day')" id="tab-day" class="px-2.5 py-1 rounded-md text-[11px] font-medium transition flex items-center gap-1.5 bg-blue-600 text-white shadow-sm shrink-0">
                         <i class="fa-solid fa-calendar-day text-[10px]"></i> CSKH247 - Ngày
                     </button>
-                    <button onclick="switchView('week')" id="tab-week" class="px-2.5 py-1 rounded-md text-[11px] font-medium transition flex items-center gap-1.5 text-slate-400 hover:text-white">
+                    <button onclick="switchView('week')" id="tab-week" class="px-2.5 py-1 rounded-md text-[11px] font-medium transition flex items-center gap-1.5 text-slate-400 hover:text-white shrink-0">
                         <i class="fa-solid fa-calendar-week text-[10px]"></i> CSKH247 - Tuần/Tháng
                     </button>
                     
-                    <!-- Tab Chức năng 3 (Hỗ trợ cuộn trượt) -->
-                    <button onclick="switchView('extra1')" id="tab-extra1" class="px-2.5 py-1 rounded-md text-[11px] font-medium transition flex items-center gap-1.5 text-slate-400 hover:text-white hidden">
+                    <!-- Tab Chức năng 3 -->
+                    <button onclick="switchView('extra1')" id="tab-extra1" class="px-2.5 py-1 rounded-md text-[11px] font-medium transition flex items-center gap-1.5 text-slate-400 hover:text-white hidden shrink-0">
                         <i class="fa-solid fa-chart-pie text-[10px]" id="icon-extra1"></i> <span id="label-extra1">Chức Năng 3</span>
                     </button>
                     <!-- Tab Chức năng 4 -->
-                    <button onclick="switchView('extra2')" id="tab-extra2" class="px-2.5 py-1 rounded-md text-[11px] font-medium transition flex items-center gap-1.5 text-slate-400 hover:text-white hidden">
+                    <button onclick="switchView('extra2')" id="tab-extra2" class="px-2.5 py-1 rounded-md text-[11px] font-medium transition flex items-center gap-1.5 text-slate-400 hover:text-white hidden shrink-0">
                         <i class="fa-solid fa-chart-line text-[10px]" id="icon-extra2"></i> <span id="label-extra2">Chức Năng 4</span>
                     </button>
                 </div>
 
-                <!-- Khu vực hiển thị trạng thái và tiện ích mở rộng -->
-                <div class="flex items-center gap-2 text-[11px]">
-                    <div class="hidden sm:flex items-center gap-1.5 px-2 py-0.5 rounded bg-slate-900/60 border border-slate-800 text-slate-400">
+                <!-- Tiện ích bên phải -->
+                <div class="flex items-center gap-1.5 text-[11px]">
+                    <div class="hidden md:flex items-center gap-1.5 px-2 py-0.5 rounded bg-slate-900/60 border border-slate-800 text-slate-400 text-[10px]">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                        <span id="currentActiveLinkText" class="truncate max-w-[150px] lg:max-w-[240px]">Đang kết nối...</span>
+                        <span id="currentActiveLinkText" class="truncate max-w-[140px]">Đang kết nối...</span>
                     </div>
 
                     <a id="openNewTabBtn" href="#" target="_blank" title="Mở trang hiện tại ở tab mới" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/80 rounded-md transition flex items-center gap-1 text-[11px]">
-                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> <span class="hidden md:inline">Tab mới</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> <span class="hidden sm:inline">Tab mới</span>
                     </a>
-
-                    <!-- Nút ghim giữ cố định header -->
-                    <button onclick="togglePinHeader()" id="pinHeaderBtn" title="Ghim thanh công cụ luôn hiển thị" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-amber-400 border border-slate-700/80 rounded-md transition flex items-center gap-1 text-[11px]">
-                        <i class="fa-solid fa-thumbtack text-[10px]"></i>
-                    </button>
 
                     <!-- Nút cấu hình link -->
                     <button onclick="openConfigModal()" class="px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/80 text-[11px] font-medium transition flex items-center gap-1.5 shadow-sm">
@@ -139,12 +150,14 @@
             </div>
         </header>
 
-        <!-- Dải cảm biến và chỉ thị màu tinh tế (6px) -->
-        <div class="hover-hint-line h-1.5 w-full bg-gradient-to-r from-transparent via-cyan-500/70 to-transparent opacity-0 transition-opacity duration-300 shadow-[0_0_8px_rgba(38,189,200,0.5)]"></div>
+        <!-- NÚT THU/MỞ NHỎ NẰM NGAY CHÍNH GIỮA MÉP DƯỚI HEADER -->
+        <button id="toggleHeaderBtn" onclick="toggleHeaderManually()" class="mini-toggle-pill" title="Nhấp để ẩn/hiện menu">
+            <i id="toggleIcon" class="fa-solid fa-chevron-up"></i>
+        </button>
     </div>
 
-    <!-- MAIN VIEWER (HIỂN THỊ TRỌN VẸN TOÀN MÀN HÌNH) -->
-    <main class="w-full h-full relative overflow-hidden bg-slate-950 flex flex-col">
+    <!-- MAIN VIEWER HIỂN THỊ TRỌN VẸN TOÀN MÀN HÌNH -->
+    <main id="mainViewer" class="w-full h-full relative overflow-hidden bg-slate-950 flex flex-col">
         <!-- Vòng xoay tải trang -->
         <div id="loadingOverlay" class="absolute inset-0 bg-slate-950/80 backdrop-blur-sm z-20 flex flex-col items-center justify-center gap-2 transition-opacity duration-300 pointer-events-none opacity-0" style="display: none;">
             <div class="w-8 h-8 border-3 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
@@ -215,66 +228,72 @@
         </div>
     </div>
 
-    <!-- LOGIC ĐIỀU KHIỂN & BỘ ĐẾM 2 GIÂY TỰ ĐỘNG THU VÀO -->
+    <!-- LOGIC TỰ ĐỘNG THU 2S VÀ ĐIỀU KHIỂN NÚT NHỎ -->
     <script>
         const DEFAULT_URL_DAY = "https://cskh247-daily-chp-dashboard.vercel.app/";
         const DEFAULT_URL_WEEK = "https://cskh-monthly-haiphong-dashboard.vercel.app/";
 
-        let isPinned = localStorage.getItem('cskh_header_pinned') === 'true';
         let hideTimer = null;
-        const HIDE_DELAY = 2000; // 2 giây tự động thu vào
+        const HIDE_DELAY = 2000; // 2 giây tự động thu gọn
 
         const headerWrapper = document.getElementById('headerWrapper');
-        const topTriggerZone = document.getElementById('topTriggerZone');
+        const toggleIcon = document.getElementById('toggleIcon');
+        const toggleBtn = document.getElementById('toggleHeaderBtn');
 
         // Hàm mở Header
         function expandHeader() {
             clearTimeout(hideTimer);
             headerWrapper.classList.remove('is-collapsed');
+            toggleIcon.className = 'fa-solid fa-chevron-up';
+            toggleBtn.title = 'Nhấp để thu gọn menu';
         }
 
-        // Hàm kích hoạt đếm lùi 2s để thu Header
-        function scheduleCollapseHeader() {
-            if (isPinned) return;
+        // Hàm đóng Header
+        function collapseHeader() {
+            clearTimeout(hideTimer);
+            headerWrapper.classList.add('is-collapsed');
+            toggleIcon.className = 'fa-solid fa-chevron-down';
+            toggleBtn.title = 'Nhấp để mở menu';
+        }
+
+        // Lên lịch đếm ngược 2s để tự đóng
+        function scheduleCollapse(delay = HIDE_DELAY) {
             clearTimeout(hideTimer);
             hideTimer = setTimeout(() => {
-                headerWrapper.classList.add('is-collapsed');
-            }, HIDE_DELAY);
+                collapseHeader();
+            }, delay);
         }
 
-        // Lắng nghe sự kiện trỏ chuột vào vùng mép trên / nửa trên header
-        topTriggerZone.addEventListener('mouseenter', expandHeader);
-        topTriggerZone.addEventListener('mousemove', expandHeader);
+        // Nút bấm mini chủ động chuyển đổi
+        function toggleHeaderManually() {
+            if (headerWrapper.classList.contains('is-collapsed')) {
+                expandHeader();
+                scheduleCollapse(3000); // Mở ra thì giữ 3s rồi tự thu lại nếu không bấm gì
+            } else {
+                collapseHeader();
+            }
+        }
 
+        // Tương tác chuột trên máy tính (Hover vào Header thì giữ nguyên, rời ra thì đếm 2s)
         headerWrapper.addEventListener('mouseenter', () => {
             clearTimeout(hideTimer);
             expandHeader();
         });
-
         headerWrapper.addEventListener('mouseleave', () => {
-            scheduleCollapseHeader();
+            scheduleCollapse(HIDE_DELAY);
         });
 
-        // Bật / Tắt chế độ ghim
-        function togglePinHeader() {
-            isPinned = !isPinned;
-            localStorage.setItem('cskh_header_pinned', isPinned);
-            applyPinState();
-        }
-
-        function applyPinState() {
-            const pinBtn = document.getElementById('pinHeaderBtn');
-            if (isPinned) {
-                clearTimeout(hideTimer);
-                headerWrapper.classList.remove('is-collapsed');
-                headerWrapper.classList.add('is-pinned');
-                pinBtn.classList.add('text-amber-400', 'bg-slate-700');
-            } else {
-                headerWrapper.classList.remove('is-pinned');
-                pinBtn.classList.remove('text-amber-400', 'bg-slate-700');
-                scheduleCollapseHeader();
+        // Xử lý riêng cho màn hình cảm ứng điện thoại (Touch / Tap)
+        document.addEventListener('touchstart', (e) => {
+            const isInsideHeader = headerWrapper.contains(e.target);
+            // Nếu chạm tay vào bất kỳ chỗ nào bên ngoài header khi đang mở -> Thu ngay
+            if (!isInsideHeader && !headerWrapper.classList.contains('is-collapsed')) {
+                collapseHeader();
+            } else if (isInsideHeader) {
+                // Nếu đang chạm vào bên trong thanh menu -> gia hạn thêm 2s
+                scheduleCollapse(HIDE_DELAY);
             }
-        }
+        }, { passive: true });
 
         window.addEventListener('DOMContentLoaded', () => {
             const savedDay = localStorage.getItem('cskh_url_day') || DEFAULT_URL_DAY;
@@ -299,13 +318,11 @@
                 document.getElementById('tab-extra2').classList.remove('hidden');
             }
 
-            applyPinState();
-
             const lastActiveTab = localStorage.getItem('cskh_active_tab') || 'day';
             switchView(lastActiveTab, false);
 
-            // Mở Header lúc tải trang rồi tự động thu vào sau 2s
-            scheduleCollapseHeader();
+            // Khi vừa tải trang trên điện thoại/máy tính: Hiển thị 2s để nhận diện rồi tự thu gọn
+            scheduleCollapse(2000);
         });
 
         function switchView(mode, saveState = true) {
@@ -328,19 +345,19 @@
                 const btn = document.getElementById(`tab-${t}`);
                 const iframe = document.getElementById(`iframe${t.charAt(0).toUpperCase() + t.slice(1)}`);
                 if (t === mode) {
-                    if (btn) btn.className = "px-2.5 py-1 rounded-md text-[11px] font-medium transition flex items-center gap-1.5 bg-blue-600 text-white shadow-sm";
+                    if (btn) btn.className = "px-2.5 py-1 rounded-md text-[11px] font-medium transition flex items-center gap-1.5 bg-blue-600 text-white shadow-sm shrink-0";
                     if (iframe) {
                         iframe.classList.remove('hidden');
                         updateStatusText(iframe.src);
                     }
                 } else {
-                    if (btn) btn.className = "px-2.5 py-1 rounded-md text-[11px] font-medium transition flex items-center gap-1.5 text-slate-400 hover:text-white";
+                    if (btn) btn.className = "px-2.5 py-1 rounded-md text-[11px] font-medium transition flex items-center gap-1.5 text-slate-400 hover:text-white shrink-0";
                     if (iframe) iframe.classList.add('hidden');
                 }
             });
 
-            // Sau khi bấm tab thì lên lịch tự động ẩn sau 2s
-            scheduleCollapseHeader();
+            // Sau khi bấm chọn tab thì tự thu gọn sau 2s
+            scheduleCollapse(2000);
         }
 
         function showLoading() {
@@ -376,7 +393,7 @@
 
         function closeConfigModal() {
             document.getElementById('configModal').classList.add('hidden');
-            scheduleCollapseHeader();
+            scheduleCollapse(1500);
         }
 
         function verifyPasscode() {
