@@ -35,37 +35,38 @@
             background-color: #080c14;
         }
 
-        /* Hiệu ứng Header tự động ẩn mượt mà */
+        /* Hiệu ứng trượt ẩn / hiện mượt mà */
         .auto-hide-wrapper {
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+            transform: translateY(0);
         }
 
-        /* Trạng thái ẩn: Chỉ chừa lại 4px mép cảm ứng ở đỉnh */
-        .header-hidden:not(:hover):not(.is-pinned) {
-            transform: translateY(calc(-100% + 4px));
+        /* Trạng thái thu gọn: Chỉ chừa dải cảm biến 6px ở mép đỉnh */
+        .auto-hide-wrapper.is-collapsed:not(.is-pinned) {
+            transform: translateY(calc(-100% + 6px));
             box-shadow: none;
         }
 
-        /* Đường viền mỏng phát sáng khi ẩn báo hiệu vùng rê chuột */
-        .header-hidden:not(:hover):not(.is-pinned) .hover-hint-line {
-            opacity: 1;
+        /* Vùng phát sáng gợi ý khi Header đang thu vào */
+        .auto-hide-wrapper.is-collapsed:not(.is-pinned) .hover-hint-line {
+            opacity: 0.9;
         }
 
         .glass-header {
-            background: rgba(11, 15, 25, 0.88);
+            background: rgba(11, 15, 25, 0.92);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .glass-card {
-            background: rgba(15, 23, 42, 0.92);
+            background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Khắc phục triệt để lỗi mất cuộn của Iframe và nội dung */
+        /* Xử lý cuộn mượt cho các Dashboard nhúng bên trong */
         .dashboard-iframe {
             width: 100%;
             height: 100%;
@@ -83,10 +84,15 @@
 </head>
 <body class="bg-darkBg text-slate-100 h-screen w-screen flex flex-col relative select-none">
 
-    <!-- KHU VỰC HEADER NỔI (TỰ ĐỘNG ẨN / HIỆN KHI RÊ CHUỘT LÊN ĐỈNH) -->
-    <div id="headerWrapper" class="auto-hide-wrapper header-hidden fixed top-0 left-0 right-0 z-50 flex flex-col group">
+    <!-- VÙNG CẢM BIẾN MỞ RỘNG (RÊ CHUỘT VÀO NỬA TRÊN CỦA TRANG HOẶC MÉP TRÊN ĐỂ HIỆN HEADER) -->
+    <div id="topTriggerZone" 
+         class="fixed top-0 left-0 right-0 h-[50px] z-40 pointer-events-auto"
+         title="Rê chuột vào đây để mở bảng điều khiển"></div>
+
+    <!-- KHU VỰC HEADER NỔI TỰ ĐỘNG THU VÀO SAU 2 GIÂY -->
+    <div id="headerWrapper" class="auto-hide-wrapper fixed top-0 left-0 right-0 z-50 flex flex-col">
         
-        <!-- Header chính tích hợp gọn gàng -->
+        <!-- Header chính -->
         <header class="glass-header px-3.5 py-1.5 shadow-2xl transition-all">
             <div class="max-w-[1920px] mx-auto flex flex-wrap items-center justify-between gap-2">
                 
@@ -99,7 +105,7 @@
                         <i class="fa-solid fa-calendar-week text-[10px]"></i> CSKH247 - Tuần/Tháng
                     </button>
                     
-                    <!-- Tab Chức năng 3 (Đã tinh chỉnh cuộn trượt) -->
+                    <!-- Tab Chức năng 3 (Hỗ trợ cuộn trượt) -->
                     <button onclick="switchView('extra1')" id="tab-extra1" class="px-2.5 py-1 rounded-md text-[11px] font-medium transition flex items-center gap-1.5 text-slate-400 hover:text-white hidden">
                         <i class="fa-solid fa-chart-pie text-[10px]" id="icon-extra1"></i> <span id="label-extra1">Chức Năng 3</span>
                     </button>
@@ -133,11 +139,11 @@
             </div>
         </header>
 
-        <!-- Dải cảm biến và chỉ thị màu tinh tế dưới đáy Header (4px) -->
-        <div class="hover-hint-line h-1 w-full bg-gradient-to-r from-transparent via-blue-500/50 to-transparent opacity-0 transition-opacity duration-300"></div>
+        <!-- Dải cảm biến và chỉ thị màu tinh tế (6px) -->
+        <div class="hover-hint-line h-1.5 w-full bg-gradient-to-r from-transparent via-cyan-500/70 to-transparent opacity-0 transition-opacity duration-300 shadow-[0_0_8px_rgba(38,189,200,0.5)]"></div>
     </div>
 
-    <!-- MAIN VIEWER (HIỂN THỊ TRỌN VẸN 100% CHIỀU CAO MÀN HÌNH) -->
+    <!-- MAIN VIEWER (HIỂN THỊ TRỌN VẸN TOÀN MÀN HÌNH) -->
     <main class="w-full h-full relative overflow-hidden bg-slate-950 flex flex-col">
         <!-- Vòng xoay tải trang -->
         <div id="loadingOverlay" class="absolute inset-0 bg-slate-950/80 backdrop-blur-sm z-20 flex flex-col items-center justify-center gap-2 transition-opacity duration-300 pointer-events-none opacity-0" style="display: none;">
@@ -145,7 +151,7 @@
             <p class="text-[11px] text-slate-400">Đang đồng bộ dữ liệu...</p>
         </div>
         
-        <!-- CÁC IFRAME ĐÃ ĐƯỢC BẬT THUỘC TÍNH SCROLLING & OVERFLOW HOÀN CHỈNH -->
+        <!-- CÁC IFRAME ĐÃ BẬT SCROLLING & OVERFLOW ĐẦY ĐỦ -->
         <iframe id="iframeDay" src="" class="dashboard-iframe hidden" scrolling="yes" allow="fullscreen"></iframe>
         <iframe id="iframeWeek" src="" class="dashboard-iframe hidden" scrolling="yes" allow="fullscreen"></iframe>
         <iframe id="iframeExtra1" src="" class="dashboard-iframe hidden" scrolling="yes" allow="fullscreen"></iframe>
@@ -209,12 +215,66 @@
         </div>
     </div>
 
-    <!-- LOGIC ĐIỀU KHIỂN -->
+    <!-- LOGIC ĐIỀU KHIỂN & BỘ ĐẾM 2 GIÂY TỰ ĐỘNG THU VÀO -->
     <script>
         const DEFAULT_URL_DAY = "https://cskh247-daily-chp-dashboard.vercel.app/";
         const DEFAULT_URL_WEEK = "https://cskh-monthly-haiphong-dashboard.vercel.app/";
 
         let isPinned = localStorage.getItem('cskh_header_pinned') === 'true';
+        let hideTimer = null;
+        const HIDE_DELAY = 2000; // 2 giây tự động thu vào
+
+        const headerWrapper = document.getElementById('headerWrapper');
+        const topTriggerZone = document.getElementById('topTriggerZone');
+
+        // Hàm mở Header
+        function expandHeader() {
+            clearTimeout(hideTimer);
+            headerWrapper.classList.remove('is-collapsed');
+        }
+
+        // Hàm kích hoạt đếm lùi 2s để thu Header
+        function scheduleCollapseHeader() {
+            if (isPinned) return;
+            clearTimeout(hideTimer);
+            hideTimer = setTimeout(() => {
+                headerWrapper.classList.add('is-collapsed');
+            }, HIDE_DELAY);
+        }
+
+        // Lắng nghe sự kiện trỏ chuột vào vùng mép trên / nửa trên header
+        topTriggerZone.addEventListener('mouseenter', expandHeader);
+        topTriggerZone.addEventListener('mousemove', expandHeader);
+
+        headerWrapper.addEventListener('mouseenter', () => {
+            clearTimeout(hideTimer);
+            expandHeader();
+        });
+
+        headerWrapper.addEventListener('mouseleave', () => {
+            scheduleCollapseHeader();
+        });
+
+        // Bật / Tắt chế độ ghim
+        function togglePinHeader() {
+            isPinned = !isPinned;
+            localStorage.setItem('cskh_header_pinned', isPinned);
+            applyPinState();
+        }
+
+        function applyPinState() {
+            const pinBtn = document.getElementById('pinHeaderBtn');
+            if (isPinned) {
+                clearTimeout(hideTimer);
+                headerWrapper.classList.remove('is-collapsed');
+                headerWrapper.classList.add('is-pinned');
+                pinBtn.classList.add('text-amber-400', 'bg-slate-700');
+            } else {
+                headerWrapper.classList.remove('is-pinned');
+                pinBtn.classList.remove('text-amber-400', 'bg-slate-700');
+                scheduleCollapseHeader();
+            }
+        }
 
         window.addEventListener('DOMContentLoaded', () => {
             const savedDay = localStorage.getItem('cskh_url_day') || DEFAULT_URL_DAY;
@@ -239,31 +299,14 @@
                 document.getElementById('tab-extra2').classList.remove('hidden');
             }
 
-            // Thiết lập trạng thái Ghim Header
             applyPinState();
 
             const lastActiveTab = localStorage.getItem('cskh_active_tab') || 'day';
             switchView(lastActiveTab, false);
+
+            // Mở Header lúc tải trang rồi tự động thu vào sau 2s
+            scheduleCollapseHeader();
         });
-
-        // Bật / Tắt chế độ ghim thanh menu
-        function togglePinHeader() {
-            isPinned = !isPinned;
-            localStorage.setItem('cskh_header_pinned', isPinned);
-            applyPinState();
-        }
-
-        function applyPinState() {
-            const wrapper = document.getElementById('headerWrapper');
-            const pinBtn = document.getElementById('pinHeaderBtn');
-            if (isPinned) {
-                wrapper.classList.add('is-pinned');
-                pinBtn.classList.add('text-amber-400', 'bg-slate-700');
-            } else {
-                wrapper.classList.remove('is-pinned');
-                pinBtn.classList.remove('text-amber-400', 'bg-slate-700');
-            }
-        }
 
         function switchView(mode, saveState = true) {
             const tabs = ['day', 'week', 'extra1', 'extra2'];
@@ -295,6 +338,9 @@
                     if (iframe) iframe.classList.add('hidden');
                 }
             });
+
+            // Sau khi bấm tab thì lên lịch tự động ẩn sau 2s
+            scheduleCollapseHeader();
         }
 
         function showLoading() {
@@ -321,6 +367,7 @@
         }
 
         function openConfigModal() {
+            clearTimeout(hideTimer);
             document.getElementById('passcodeField').value = '';
             document.getElementById('authSection').classList.remove('hidden');
             document.getElementById('configFormSection').classList.add('hidden');
@@ -329,6 +376,7 @@
 
         function closeConfigModal() {
             document.getElementById('configModal').classList.add('hidden');
+            scheduleCollapseHeader();
         }
 
         function verifyPasscode() {
