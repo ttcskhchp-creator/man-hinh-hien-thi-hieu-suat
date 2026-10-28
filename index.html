@@ -47,10 +47,10 @@
         }
 
         .glass-header {
-            background: linear-gradient(180deg, rgba(8, 14, 29, 0.97) 0%, rgba(5, 10, 22, 0.95) 100%);
+            background: linear-gradient(180deg, rgba(8, 14, 29, 0.98) 0%, rgba(5, 10, 22, 0.96) 100%);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(56, 189, 248, 0.15);
+            border-bottom: 1px solid rgba(56, 189, 248, 0.2);
         }
 
         /* Nút mini ẩn/hiện mép dưới Header */
@@ -81,7 +81,7 @@
             bottom: -24px;
         }
 
-        /* Huy hiệu 1874 Hoàng Gia Cực Nổi Bật */
+        /* Huy hiệu 1874 Hoàng Gia Nổi Bật */
         .badge-1874 {
             background: linear-gradient(135deg, #1e1b18 0%, #291e0a 50%, #151006 100%);
             border: 1.5px solid #f59e0b;
@@ -121,7 +121,7 @@
             position: absolute;
             right: -6px;
             bottom: -8px;
-            font-size: 42px;
+            font-size: 44px;
             opacity: 0.12;
             pointer-events: none;
             transition: transform 0.3s ease;
@@ -150,7 +150,7 @@
         @media (max-width: 860px) {
             .grid-layout-2, .grid-layout-3, .grid-layout-4 {
                 grid-template-columns: 1fr !important;
-                grid-template-rows: repeat(auto-fit, minmax(300px, 1fr)) !important;
+                grid-template-rows: repeat(auto-fit, minmax(320px, 1fr)) !important;
                 overflow-y: auto !important;
             }
         }
@@ -166,8 +166,8 @@
         }
 
         .pane-header {
-            height: 28px;
-            background: rgba(15, 23, 42, 0.95);
+            height: 30px;
+            background: rgba(15, 23, 42, 0.96);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             align-items: center;
@@ -175,6 +175,7 @@
             padding: 0 10px;
             font-size: 11px;
             flex-shrink: 0;
+            gap: 8px;
         }
 
         .dashboard-iframe {
@@ -197,45 +198,60 @@
         .ticker-wrapper:hover .ticker-text {
             animation-play-state: paused;
         }
+
+        /* Tùy chỉnh select đổi chỗ */
+        .pane-select {
+            background-color: #0f172a;
+            color: #cbd5e1;
+            border: 1px solid #334155;
+            border-radius: 4px;
+            padding: 1px 4px;
+            font-size: 11px;
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+        }
+        .pane-select:focus {
+            border-color: #38bdf8;
+        }
     </style>
 </head>
 <body class="bg-darkBg text-slate-100 h-screen w-screen flex flex-col relative select-none">
 
     <!-- KHU VỰC HEADER TỔ HỢP ĐIỀU HÀNH -->
     <div id="headerWrapper" class="auto-hide-wrapper fixed top-0 left-0 right-0 z-50 flex flex-col shadow-2xl">
-        <header class="glass-header px-4 pt-2.5 pb-2.5 border-b border-cyan-500/20">
-            <div class="max-w-[2100px] mx-auto flex flex-col gap-2.5">
+        <header class="glass-header px-4 pt-2 pb-2 border-b border-cyan-500/20">
+            <div class="max-w-[2100px] mx-auto flex flex-col gap-2">
                 
-                <!-- DÒNG 1: THƯƠNG HIỆU, LOGO HẢI ÂU - TÀU CONTAINER & HUY HIỆU 1874 -->
+                <!-- DÒNG 1: THƯƠNG HIỆU, LOGO HẢI ÂU - TÀU CONTAINER, HUY HIỆU 1874 & CÔNG CỤ -->
                 <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800/80 pb-2">
                     
                     <!-- Nhóm Logo + Tên Tổ Hợp & Đơn Vị Vận Hành -->
                     <div class="flex items-center gap-3">
                         
-                        <!-- BIỂU TƯỢNG ĐỒNG BỘ: CHIM HẢI ÂU VÀ TÀU CONTAINER -->
+                        <!-- BIỂU TƯỢNG: CHIM HẢI ÂU VÀ TÀU CONTAINER -->
                         <div class="relative w-12 h-12 rounded-xl bg-gradient-to-br from-blue-900/60 via-slate-900 to-cyan-950/80 border border-cyan-400/40 flex items-center justify-center shadow-[0_0_15px_rgba(6,182,212,0.3)] shrink-0 overflow-hidden">
-                            <!-- SVG Chim Hải Âu Lượn Sóng & Tàu Container Chở Hàng -->
                             <svg class="w-10 h-10" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <!-- Đôi chim hải âu chao lượn -->
                                 <path d="M14 15 C18 11, 23 13, 27 16 C31 13, 36 11, 40 15 C35 15, 30 18, 27 21 C24 18, 19 15, 14 15 Z" fill="#38bdf8"/>
                                 <path d="M38 10 C41 7, 44 8, 47 10 C50 8, 53 7, 56 10 C52 10, 49 12, 47 14 C45 12, 42 10, 38 10 Z" fill="#7dd3fc" opacity="0.85"/>
                                 <!-- Tàu Container cỡ lớn -->
                                 <path d="M6 46 L14 46 L20 35 L47 35 L55 46 L58 46 L55 52 L11 52 Z" fill="#0284c7"/>
-                                <!-- Khối Container xếp tầng -->
+                                <!-- Khối Container đa màu -->
                                 <rect x="22" y="27" width="7" height="6" rx="1" fill="#f59e0b" />
                                 <rect x="31" y="27" width="7" height="6" rx="1" fill="#ef4444" />
                                 <rect x="40" y="27" width="7" height="6" rx="1" fill="#10b981" />
                                 <rect x="26" y="21" width="7" height="5" rx="1" fill="#38bdf8" />
                                 <rect x="35" y="21" width="7" height="5" rx="1" fill="#a855f7" />
-                                <!-- Ca-bin lái đài chỉ huy -->
+                                <!-- Ca-bin chỉ huy -->
                                 <path d="M48 24 L52 24 L53 35 L47 35 Z" fill="#e2e8f0"/>
                                 <circle cx="50" cy="27" r="1" fill="#0284c7"/>
-                                <!-- Làn sóng biển đáy -->
+                                <!-- Sóng biển -->
                                 <path d="M4 53 C12 51, 18 55, 26 53 C34 51, 42 55, 50 53 C56 51, 60 53, 62 53" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round"/>
                             </svg>
                         </div>
 
-                        <!-- Khối Văn Bản Tên Đơn Vị & Tổ Hợp -->
+                        <!-- Khối Tên Đơn Vị & Tổ Hợp -->
                         <div class="flex flex-col">
                             <div class="flex items-center gap-2">
                                 <h1 class="text-sm md:text-base font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-sky-300 uppercase leading-snug">
@@ -253,7 +269,7 @@
                             </div>
                         </div>
 
-                        <!-- HUY HIỆU DI SẢN 1874 TRANG TRÍ HOÀNG GIA NỔI BẬT -->
+                        <!-- HUY HIỆU DI SẢN 1874 HOÀNG GIA -->
                         <div class="badge-1874 px-3 py-1 rounded-xl flex items-center gap-2 shadow-lg ml-1 hidden lg:flex">
                             <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-950 font-black shadow">
                                 <i class="fa-solid fa-anchor text-xs"></i>
@@ -269,17 +285,17 @@
                         </div>
                     </div>
 
-                    <!-- Lời chúc, Đồng hồ & Bộ chọn Đa màn hình -->
-                    <div class="flex items-center gap-2.5 ml-auto">
+                    <!-- Lời chúc, Đồng hồ & Cụm điều khiển -->
+                    <div class="flex items-center gap-2 ml-auto">
                         
-                        <!-- Lời chúc theo ca trực -->
-                        <div class="hidden xl:flex items-center gap-1.5 text-xs text-amber-300 font-medium bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/30 shadow-inner">
+                        <!-- Lời chúc theo ca -->
+                        <div class="hidden xl:flex items-center gap-1.5 text-xs text-amber-300 font-medium bg-amber-500/10 px-2.5 py-1 rounded-full border border-amber-500/30 shadow-inner">
                             <i id="greetingIcon" class="fa-solid fa-sun text-amber-400"></i>
                             <span id="greetingText">Chúc ca làm việc hiệu quả!</span>
                         </div>
 
-                        <!-- Lịch ngày & Đồng hồ thực -->
-                        <div class="hidden md:flex items-center gap-2 text-xs text-slate-300 bg-slate-900/90 px-3 py-1 rounded-lg border border-slate-800">
+                        <!-- Lịch ngày & Đồng hồ -->
+                        <div class="hidden md:flex items-center gap-2 text-xs text-slate-300 bg-slate-900/90 px-2.5 py-1 rounded-lg border border-slate-800">
                             <i class="fa-regular fa-calendar-days text-cyan-400"></i>
                             <span id="liveDate">Đang tải...</span>
                             <span class="text-slate-600">|</span>
@@ -287,66 +303,63 @@
                             <span id="liveClock" class="font-mono font-bold text-emerald-300 tracking-wider">00:00:00</span>
                         </div>
 
-                        <!-- Cụm chọn bố cục 1, 2, 3, 4 màn hình -->
+                        <!-- BỘ CHỌN BỐ CỤC 1, 2, 3, 4 TRANG -->
                         <div class="bg-slate-950 p-1 rounded-lg border border-slate-800 flex items-center gap-1 shadow-inner">
-                            <button onclick="setLayout(1)" id="btnLayout1" title="Toàn màn hình thẻ chọn" class="px-2.5 py-1 rounded text-xs font-semibold transition flex items-center gap-1.5 bg-blue-600 text-white shadow">
+                            <button onclick="setLayout(1)" id="btnLayout1" title="Toàn màn hình 1 trang" class="px-2 py-1 rounded text-xs font-semibold transition flex items-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-800">
                                 <i class="fa-solid fa-square"></i> <span class="hidden sm:inline">1 Trang</span>
                             </button>
-                            <button onclick="setLayout(2)" id="btnLayout2" title="Chia đôi 2 màn hình" class="px-2.5 py-1 rounded text-xs font-semibold transition flex items-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-800">
+                            <button onclick="setLayout(2)" id="btnLayout2" title="Chia đôi 2 màn hình (Daily Task & Lịch tàu)" class="px-2 py-1 rounded text-xs font-semibold transition flex items-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-800">
                                 <i class="fa-solid fa-columns"></i> <span class="hidden sm:inline">2 Trang</span>
                             </button>
-                            <button onclick="setLayout(3)" id="btnLayout3" title="Bố cục 3 màn hình" class="px-2.5 py-1 rounded text-xs font-semibold transition flex items-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-800">
+                            <button onclick="setLayout(3)" id="btnLayout3" title="Bố cục 3 màn hình" class="px-2 py-1 rounded text-xs font-semibold transition flex items-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-800">
                                 <i class="fa-solid fa-table-columns"></i> <span class="hidden sm:inline">3 Trang</span>
                             </button>
-                            <button onclick="setLayout(4)" id="btnLayout4" title="Mở cả 4 màn hình cùng lúc" class="px-2.5 py-1 rounded text-xs font-semibold transition flex items-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-800">
+                            <button onclick="setLayout(4)" id="btnLayout4" title="Mở cả 4 màn hình (Daily Task & Lịch tàu ở trên)" class="px-2 py-1 rounded text-xs font-semibold transition flex items-center gap-1.5 bg-blue-600 text-white shadow">
                                 <i class="fa-solid fa-border-all"></i> <span class="hidden sm:inline">4 Trang (2x2)</span>
                             </button>
                         </div>
 
+                        <!-- Nút Đặt lại thứ tự mặc định -->
+                        <button onclick="resetDefaultOrder()" title="Khôi phục thứ tự mặc định: Daily Task & Lịch tàu lên hàng trên" class="px-2 py-1 bg-slate-900 hover:bg-slate-800 border border-slate-700/80 rounded-lg text-amber-300 hover:text-amber-200 text-xs font-semibold flex items-center gap-1 transition">
+                            <i class="fa-solid fa-arrow-rotate-left"></i> <span class="hidden lg:inline">Mặc định</span>
+                        </button>
+
+                        <!-- Nút Ghim Header cố định -->
+                        <button id="pinHeaderBtn" onclick="togglePinHeader()" title="Ghim thanh công cụ không tự thu gọn" class="p-1.5 px-2 bg-slate-900 hover:bg-slate-800 border border-slate-700/80 rounded-lg text-slate-400 hover:text-white text-xs transition flex items-center gap-1">
+                            <i id="pinIcon" class="fa-solid fa-thumbtack text-slate-400"></i>
+                            <span id="pinText" class="hidden xl:inline text-[11px]">Tự thu</span>
+                        </button>
+
                         <!-- Phóng to toàn màn hình -->
-                        <button onclick="toggleFullScreen()" title="Toàn màn hình F11" class="p-2 bg-slate-900 hover:bg-slate-800 border border-slate-700/80 rounded-lg text-slate-300 hover:text-white text-xs transition">
+                        <button onclick="toggleFullScreen()" title="Toàn màn hình F11" class="p-1.5 bg-slate-900 hover:bg-slate-800 border border-slate-700/80 rounded-lg text-slate-300 hover:text-white text-xs transition">
                             <i id="fullscreenIcon" class="fa-solid fa-expand"></i>
                         </button>
                     </div>
                 </div>
 
-                <!-- DÒNG 2: 4 THẺ CHỨC NĂNG VỚI MÀU SẮC ĐẶC TRƯNG & HÌNH NỀN BIỂU TƯỢNG -->
+                <!-- DÒNG 2: 4 THẺ CHỨC NĂNG - MẶC ĐỊNH XẾP: DAILY TASK & LỊCH TÀU ĐẦU TIÊN -->
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5">
                     
-                    <!-- THẺ 1: CSKH Daily -->
-                    <div onclick="selectPrimaryCard(0)" id="card-0" 
-                         style="--card-accent: #0284c7; --card-glow: rgba(2, 132, 199, 0.4);" 
-                         class="nav-card active bg-gradient-to-br from-sky-950/80 via-slate-900/90 to-blue-950/70 p-2.5">
-                        <i class="fa-solid fa-chart-pie nav-card-watermark text-sky-400"></i>
+                    <!-- THẺ 1 (MẶC ĐỊNH ĐẦU): Daily Task -->
+                    <div onclick="selectPrimaryCard('task')" id="card-task" 
+                         style="--card-accent: #d97706; --card-glow: rgba(217, 119, 6, 0.4);" 
+                         class="nav-card active bg-gradient-to-br from-amber-950/80 via-slate-900/90 to-orange-950/70 p-2.5">
+                        <i class="fa-solid fa-clipboard-check nav-card-watermark text-amber-400"></i>
                         <div class="flex items-center gap-2.5 relative z-10">
-                            <div class="w-9 h-9 rounded-lg bg-sky-500/20 border border-sky-400/40 flex items-center justify-center text-sky-400 shadow-inner">
-                                <i class="fa-solid fa-calendar-day text-sm"></i>
+                            <div class="w-9 h-9 rounded-lg bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-amber-400 shadow-inner">
+                                <i class="fa-solid fa-list-check text-sm"></i>
                             </div>
                             <div class="flex flex-col min-w-0">
-                                <span class="text-xs font-bold text-white tracking-wide truncate">CSKH Daily</span>
-                                <span class="text-[10px] text-sky-300/80 truncate">Giám sát & Báo cáo ngày</span>
+                                <span class="text-xs font-bold text-white tracking-wide truncate flex items-center gap-1.5">
+                                    Daily Task <span class="text-[9px] px-1 py-0.2 rounded bg-amber-500/30 text-amber-300 font-normal">Hàng 1</span>
+                                </span>
+                                <span class="text-[10px] text-amber-300/80 truncate">Sự vụ & Nhiệm vụ thường nhật</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- THẺ 2: CSKH Monthly -->
-                    <div onclick="selectPrimaryCard(1)" id="card-1" 
-                         style="--card-accent: #8b5cf6; --card-glow: rgba(139, 92, 246, 0.4);" 
-                         class="nav-card bg-gradient-to-br from-indigo-950/80 via-slate-900/90 to-purple-950/70 p-2.5">
-                        <i class="fa-solid fa-chart-line nav-card-watermark text-purple-400"></i>
-                        <div class="flex items-center gap-2.5 relative z-10">
-                            <div class="w-9 h-9 rounded-lg bg-purple-500/20 border border-purple-400/40 flex items-center justify-center text-purple-400 shadow-inner">
-                                <i class="fa-solid fa-calendar-week text-sm"></i>
-                            </div>
-                            <div class="flex flex-col min-w-0">
-                                <span class="text-xs font-bold text-white tracking-wide truncate">CSKH Monthly</span>
-                                <span class="text-[10px] text-purple-300/80 truncate">Tổng hợp Tuần & Tháng</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- THẺ 3: Berthing Window -->
-                    <div onclick="selectPrimaryCard(2)" id="card-2" 
+                    <!-- THẺ 2 (MẶC ĐỊNH THỨ HAI): Berthing Window -->
+                    <div onclick="selectPrimaryCard('berthing')" id="card-berthing" 
                          style="--card-accent: #0d9488; --card-glow: rgba(13, 148, 136, 0.4);" 
                          class="nav-card bg-gradient-to-br from-teal-950/80 via-slate-900/90 to-emerald-950/70 p-2.5">
                         <i class="fa-solid fa-ship nav-card-watermark text-teal-400"></i>
@@ -355,40 +368,61 @@
                                 <i class="fa-solid fa-ferry text-sm"></i>
                             </div>
                             <div class="flex flex-col min-w-0">
-                                <span class="text-xs font-bold text-white tracking-wide truncate">Berthing Window</span>
+                                <span class="text-xs font-bold text-white tracking-wide truncate flex items-center gap-1.5">
+                                    Berthing Window <span class="text-[9px] px-1 py-0.2 rounded bg-teal-500/30 text-teal-300 font-normal">Hàng 1</span>
+                                </span>
                                 <span class="text-[10px] text-teal-300/80 truncate">Kế hoạch tàu & Cầu bến</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- THẺ 4: Daily Task -->
-                    <div onclick="selectPrimaryCard(3)" id="card-3" 
-                         style="--card-accent: #d97706; --card-glow: rgba(217, 119, 6, 0.4);" 
-                         class="nav-card bg-gradient-to-br from-amber-950/80 via-slate-900/90 to-orange-950/70 p-2.5">
-                        <i class="fa-solid fa-clipboard-check nav-card-watermark text-amber-400"></i>
+                    <!-- THẺ 3 (MẶC ĐỊNH THỨ BA): CSKH Daily -->
+                    <div onclick="selectPrimaryCard('day')" id="card-day" 
+                         style="--card-accent: #0284c7; --card-glow: rgba(2, 132, 199, 0.4);" 
+                         class="nav-card bg-gradient-to-br from-sky-950/80 via-slate-900/90 to-blue-950/70 p-2.5">
+                        <i class="fa-solid fa-chart-pie nav-card-watermark text-sky-400"></i>
                         <div class="flex items-center gap-2.5 relative z-10">
-                            <div class="w-9 h-9 rounded-lg bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-amber-400 shadow-inner">
-                                <i class="fa-solid fa-list-check text-sm"></i>
+                            <div class="w-9 h-9 rounded-lg bg-sky-500/20 border border-sky-400/40 flex items-center justify-center text-sky-400 shadow-inner">
+                                <i class="fa-solid fa-calendar-day text-sm"></i>
                             </div>
                             <div class="flex flex-col min-w-0">
-                                <span class="text-xs font-bold text-white tracking-wide truncate">Daily Task</span>
-                                <span class="text-[10px] text-amber-300/80 truncate">Sự vụ & Nhiệm vụ thường nhật</span>
+                                <span class="text-xs font-bold text-white tracking-wide truncate flex items-center gap-1.5">
+                                    CSKH Daily <span class="text-[9px] px-1 py-0.2 rounded bg-sky-500/30 text-sky-300 font-normal">Hàng 2</span>
+                                </span>
+                                <span class="text-[10px] text-sky-300/80 truncate">Giám sát & Báo cáo ngày</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- THẺ 4 (MẶC ĐỊNH THỨ TƯ): CSKH Monthly -->
+                    <div onclick="selectPrimaryCard('week')" id="card-week" 
+                         style="--card-accent: #8b5cf6; --card-glow: rgba(139, 92, 246, 0.4);" 
+                         class="nav-card bg-gradient-to-br from-indigo-950/80 via-slate-900/90 to-purple-950/70 p-2.5">
+                        <i class="fa-solid fa-chart-line nav-card-watermark text-purple-400"></i>
+                        <div class="flex items-center gap-2.5 relative z-10">
+                            <div class="w-9 h-9 rounded-lg bg-purple-500/20 border border-purple-400/40 flex items-center justify-center text-purple-400 shadow-inner">
+                                <i class="fa-solid fa-calendar-week text-sm"></i>
+                            </div>
+                            <div class="flex flex-col min-w-0">
+                                <span class="text-xs font-bold text-white tracking-wide truncate flex items-center gap-1.5">
+                                    CSKH Monthly <span class="text-[9px] px-1 py-0.2 rounded bg-purple-500/30 text-purple-300 font-normal">Hàng 2</span>
+                                </span>
+                                <span class="text-[10px] text-purple-300/80 truncate">Tổng hợp Tuần & Tháng</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- DÒNG 3: DÒNG CHỮ HƯỚNG DẪN NHỎ CÁCH SỬ DỤNG MỞ CÁC CHỨC NĂNG (TICKER) -->
+                <!-- DÒNG 3: DÒNG CHỮ HƯỚNG DẪN CÁCH ĐỔI CHỖ & MỞ CÁC CHỨC NĂNG (TICKER) -->
                 <div class="ticker-wrapper overflow-hidden bg-slate-950/80 border border-cyan-500/20 rounded-md py-1 px-3 text-[11px] text-slate-300 flex items-center">
                     <span class="bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 px-2 py-0.5 rounded text-[10px] font-bold uppercase mr-2.5 shrink-0 flex items-center gap-1">
-                        <i class="fa-solid fa-circle-info"></i> HƯỚNG DẪN SỬ DỤNG
+                        <i class="fa-solid fa-circle-info"></i> HƯỚNG DẪN & ĐỔI CHỖ
                     </span>
                     <div class="w-full overflow-hidden relative">
                         <div class="ticker-text">
-                            🚢 <b>Mở chức năng độc lập:</b> Nhấp chuột trực tiếp vào 1 trong 4 thẻ (CSKH Daily, CSKH Monthly, Berthing Window, Daily Task) để xem toàn màn hình. • 
-                            🖥️ <b>Mở đa màn hình (2, 3, 4 trang):</b> Nhấp các nút chuyển bố cục ở góc trên bên phải để theo dõi song song nhiều hệ thống trên cùng một giao diện. • 
-                            🔄 <b>Tiện ích cửa sổ:</b> Mỗi khung đều hỗ trợ nút Tải lại (Refresh) và Mở ở tab mới độc lập. • 
-                            ⚓ <b>Mở rộng tối đa:</b> Thanh điều khiển sẽ tự động thu gọn sau 2.5s hoặc bấm nút mũi tên ở mép dưới để ẩn/hiện tùy ý.
+                            ✨ <b>Đổi chỗ cửa sổ:</b> Trên thanh tiêu đề của mỗi khung màn hình, dùng menu chọn hoặc nút ◀ ▶ để hoán đổi bất kỳ ứng dụng nào vào vị trí mong muốn. • 
+                            🚢 <b>Bố cục mặc định:</b> Daily Task & Lịch tàu Berthing Window luôn xếp ở hàng trên cùng. • 
+                            📌 <b>Thanh điều khiển thông minh:</b> Khi bạn trỏ chuột vào header sẽ KHÔNG BAO GIỜ bị thu lại! Bạn cũng có thể bấm nút "Tự thu / Ghim" để khóa cố định thanh menu.
                         </div>
                     </div>
                 </div>
@@ -408,70 +442,79 @@
         <!-- Vòng xoay tải trang -->
         <div id="loadingOverlay" class="absolute inset-0 bg-slate-950/85 backdrop-blur-sm z-30 flex flex-col items-center justify-center gap-2.5 transition-opacity duration-300 pointer-events-none opacity-0" style="display: none;">
             <div class="w-9 h-9 border-3 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>
-            <p class="text-xs font-semibold text-cyan-200">Đang đồng bộ dữ liệu giám sát...</p>
+            <p class="text-xs font-semibold text-cyan-200">Đang cập nhật bố cục cửa sổ...</p>
         </div>
 
         <!-- Khung Grid hiển thị các Iframe -->
-        <div id="gridContainer" class="grid-viewer grid-layout-1"></div>
+        <div id="gridContainer" class="grid-viewer grid-layout-4"></div>
     </main>
 
     <!-- KỊCH BẢN ĐIỀU HÀNH TỔ HỢP -->
     <script>
-        // CẤU HÌNH 4 ỨNG DỤNG HỆ THỐNG
-        const APPS = [
-            {
-                id: 'day',
-                name: 'CSKH Daily',
-                desc: 'Báo cáo ngày CSKH 24/7',
-                url: 'https://cskh247-daily-chp-dashboard.vercel.app/',
-                color: '#0284c7',
-                icon: 'fa-solid fa-calendar-day',
-                tag: 'Daily'
-            },
-            {
-                id: 'week',
-                name: 'CSKH Monthly',
-                desc: 'Tổng hợp Tuần & Tháng',
-                url: 'https://cskh-monthly-haiphong-dashboard.vercel.app/',
-                color: '#8b5cf6',
-                icon: 'fa-solid fa-calendar-week',
-                tag: 'Monthly'
-            },
-            {
-                id: 'berthing',
-                name: 'Berthing Window',
-                desc: 'Kế hoạch tàu & Cầu bến',
-                url: 'https://vesselcalldaily.vercel.app/',
-                color: '#0d9488',
-                icon: 'fa-solid fa-ferry',
-                tag: 'Berthing'
-            },
-            {
+        // CẤU HÌNH THÔNG TIN 4 ỨNG DỤNG
+        const APPS_DICT = {
+            'task': {
                 id: 'task',
                 name: 'Daily Task',
                 desc: 'Sự vụ & Nhiệm vụ thường nhật',
                 url: 'https://dsuktdvkhhpport.vercel.app/?utm_source=zalo&utm_medium=zalo&utm_campaign=zalo&zarsrc=30&gidzl=3m-IIq1b_Ye96Pj5J7Z-90GRdqLMBFykJqsP50f-g7KL6yaQ3okaT4GQmauDUF8k5KcK4sHyKbHOGcpt9m',
                 color: '#d97706',
                 icon: 'fa-solid fa-clipboard-check',
-                tag: 'Tasks'
+                tag: 'Tasks (Hàng 1)'
+            },
+            'berthing': {
+                id: 'berthing',
+                name: 'Berthing Window',
+                desc: 'Kế hoạch tàu & Cầu bến',
+                url: 'https://vesselcalldaily.vercel.app/',
+                color: '#0d9488',
+                icon: 'fa-solid fa-ferry',
+                tag: 'Lịch tàu (Hàng 1)'
+            },
+            'day': {
+                id: 'day',
+                name: 'CSKH Daily',
+                desc: 'Giám sát & Báo cáo ngày',
+                url: 'https://cskh247-daily-chp-dashboard.vercel.app/',
+                color: '#0284c7',
+                icon: 'fa-solid fa-calendar-day',
+                tag: 'Daily (Hàng 2)'
+            },
+            'week': {
+                id: 'week',
+                name: 'CSKH Monthly',
+                desc: 'Tổng hợp Tuần & Tháng',
+                url: 'https://cskh-monthly-haiphong-dashboard.vercel.app/',
+                color: '#8b5cf6',
+                icon: 'fa-solid fa-calendar-week',
+                tag: 'Monthly (Hàng 2)'
             }
-        ];
+        };
 
-        let currentLayout = 1;
-        let activeCardIndex = 0;
+        // MẶC ĐỊNH: Daily Task & Lịch tàu lên hàng trên, tiếp theo là CSKH Daily & CSKH Monthly
+        const DEFAULT_ORDER = ['task', 'berthing', 'day', 'week'];
+        let currentOrder = [...DEFAULT_ORDER];
+
+        let currentLayout = 4; // Mặc định mở 4 trang (Lưới 2x2: Hàng trên là Task & Tàu)
+        let activeCardId = 'task';
+        
         let hideTimer = null;
-        const AUTO_HIDE_DELAY = 2500;
+        let isHeaderHovered = false; // Cờ kiểm soát trỏ chuột vào header
+        let isPinned = false;         // Cờ ghim header cố định
+        const AUTO_HIDE_DELAY = 2600;
 
         const headerWrapper = document.getElementById('headerWrapper');
         const toggleIcon = document.getElementById('toggleIcon');
         const toggleBtn = document.getElementById('toggleHeaderBtn');
         const toggleText = document.getElementById('toggleText');
         const gridContainer = document.getElementById('gridContainer');
+        const pinHeaderBtn = document.getElementById('pinHeaderBtn');
+        const pinIcon = document.getElementById('pinIcon');
+        const pinText = document.getElementById('pinText');
 
-        // Cập nhật Ngày giờ thực & Lời chúc theo ca trực
+        // ================= CẬP NHẬT ĐỒNG HỒ & LỜI CHÚC THEO CA =================
         function updateLiveDateTime() {
             const now = new Date();
-            
             const daysOfWeek = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
             const dayName = daysOfWeek[now.getDay()];
             const day = String(now.getDate()).padStart(2, '0');
@@ -490,7 +533,7 @@
 
             if (currentHour >= 5 && currentHour < 11) {
                 greetingIconEl.className = 'fa-solid fa-cloud-sun text-amber-400';
-                greetingTextEl.innerText = 'Chúc ca sáng làm việc suôn sẻ, khai thác năng suất & an toàn! 🌅';
+                greetingTextEl.innerText = 'Chúc ca sáng làm việc suôn sẻ, an toàn & khai thác năng suất! 🌅';
             } else if (currentHour >= 11 && currentHour < 14) {
                 greetingIconEl.className = 'fa-solid fa-sun text-amber-400';
                 greetingTextEl.innerText = 'Chúc ca trực trưa phối hợp nhịp nhàng, thông suốt luồng hàng! ☀️';
@@ -502,53 +545,73 @@
                 greetingTextEl.innerText = 'Chúc ca tối giám sát chặt chẽ, cầu bến vận hành liên tục! ⚓';
             } else {
                 greetingIconEl.className = 'fa-solid fa-compass text-teal-400';
-                greetingTextEl.innerText = 'Chúc ca đêm tỉnh táo, giữ vững nhịp độ khai thác 24/7 an toàn! 🌙';
+                greetingTextEl.innerText = 'Chúc ca đêm tỉnh táo, duy trì nhịp độ khai thác 24/7 an toàn! 🌙';
             }
         }
 
-        // Render giao diện đa màn hình
+        // ================= XỬ LÝ RENDER LƯỚI & TÙY CHỌN ĐỔI CHỖ =================
         function renderViewports() {
             gridContainer.innerHTML = '';
             gridContainer.className = `grid-viewer grid-layout-${currentLayout}`;
 
-            let activeApps = [];
-
+            let displayIds = [];
             if (currentLayout === 1) {
-                activeApps = [APPS[activeCardIndex]];
+                displayIds = [activeCardId];
             } else if (currentLayout === 2) {
-                const secondIndex = (activeCardIndex + 1) % APPS.length;
-                activeApps = [APPS[activeCardIndex], APPS[secondIndex]];
+                // Hiển thị 2 ứng dụng đầu trong danh sách thứ tự hiện tại
+                displayIds = [currentOrder[0], currentOrder[1]];
             } else if (currentLayout === 3) {
-                const idx1 = activeCardIndex;
-                const idx2 = (activeCardIndex + 1) % APPS.length;
-                const idx3 = (activeCardIndex + 2) % APPS.length;
-                activeApps = [APPS[idx1], APPS[idx2], APPS[idx3]];
+                displayIds = [currentOrder[0], currentOrder[1], currentOrder[2]];
             } else if (currentLayout === 4) {
-                activeApps = [...APPS];
+                displayIds = [...currentOrder];
             }
 
-            activeApps.forEach((app, idx) => {
+            displayIds.forEach((appId, slotIdx) => {
+                const app = APPS_DICT[appId];
                 const pane = document.createElement('div');
-                pane.className = `pane-container pane-slot-${idx}`;
+                pane.className = `pane-container pane-slot-${slotIdx}`;
                 const showHeader = currentLayout > 1;
-                
+
+                // Tạo danh sách tùy chọn cho thẻ select đổi chỗ
+                let selectOptionsHtml = '';
+                DEFAULT_ORDER.forEach(idKey => {
+                    const item = APPS_DICT[idKey];
+                    const selected = idKey === appId ? 'selected' : '';
+                    selectOptionsHtml += `<option value="${idKey}" ${selected}>${item.name}</option>`;
+                });
+
                 pane.innerHTML = `
                     ${showHeader ? `
                     <div class="pane-header">
-                        <div class="flex items-center gap-2 truncate">
-                            <i class="${app.icon}" style="color: ${app.color};"></i>
-                            <span class="font-bold text-slate-200 truncate">${app.name}</span>
-                            <span class="text-[9px] px-1.5 py-0.2 rounded font-bold text-slate-400 bg-slate-800">${app.tag}</span>
+                        <!-- Nhóm Đổi chỗ cửa sổ: Nút Mũi tên & Dropdown -->
+                        <div class="flex items-center gap-1.5 truncate">
+                            <span class="text-[10px] font-bold text-slate-400 bg-slate-800/80 px-1.5 py-0.5 rounded">Ô ${slotIdx + 1}</span>
+                            
+                            <select onchange="changeSlotApp(${slotIdx}, this.value)" class="pane-select text-slate-200" title="Chọn chức năng hiển thị tại ô này">
+                                ${selectOptionsHtml}
+                            </select>
+
+                            <!-- Nút mũi tên hoán đổi nhanh với ô liền kề -->
+                            <div class="flex items-center gap-0.5 ml-1">
+                                <button onclick="swapWithNeighbor(${slotIdx}, -1)" title="Đổi chỗ với ô phía trước" class="px-1 py-0.5 text-slate-400 hover:text-cyan-400 text-[10px] rounded hover:bg-slate-800">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </button>
+                                <button onclick="swapWithNeighbor(${slotIdx}, 1)" title="Đổi chỗ với ô phía sau" class="px-1 py-0.5 text-slate-400 hover:text-cyan-400 text-[10px] rounded hover:bg-slate-800">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </button>
+                            </div>
                         </div>
+
+                        <!-- Nhóm Tiện ích bên phải cửa sổ -->
                         <div class="flex items-center gap-2">
                             <button onclick="refreshIframe('iframe-${app.id}')" title="Tải lại khung này" class="text-slate-400 hover:text-white transition">
-                                <i class="fa-solid fa-rotate-right text-[10px]"></i>
+                                <i class="fa-solid fa-rotate-right text-[11px]"></i>
                             </button>
                             <button onclick="zoomToSingle('${app.id}')" title="Xem 1 trang toàn màn hình" class="text-slate-400 hover:text-cyan-400 transition">
-                                <i class="fa-solid fa-maximize text-[10px]"></i>
+                                <i class="fa-solid fa-maximize text-[11px]"></i>
                             </button>
                             <a href="${app.url}" target="_blank" title="Mở trang trong tab mới" class="text-slate-400 hover:text-emerald-400 transition">
-                                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i>
                             </a>
                         </div>
                     </div>` : ''}
@@ -560,19 +623,68 @@
             updateCardHighlight();
         }
 
-        // Chọn Thẻ chức năng
-        function selectPrimaryCard(index) {
-            activeCardIndex = index;
+        // Đổi chức năng hiển thị tại một ô cụ thể bằng Dropdown
+        function changeSlotApp(slotIndex, newAppId) {
+            const currentAppIdAtSlot = currentOrder[slotIndex];
+            if (currentAppIdAtSlot === newAppId) return;
+
+            // Tìm xem newAppId đang nằm ở ô nào để tráo đổi 2 vị trí với nhau
+            const existingIdx = currentOrder.indexOf(newAppId);
+            if (existingIdx !== -1) {
+                currentOrder[slotIndex] = newAppId;
+                currentOrder[existingIdx] = currentAppIdAtSlot;
+            } else {
+                currentOrder[slotIndex] = newAppId;
+            }
+
+            activeCardId = newAppId;
             renderViewports();
-            scheduleCollapse(2000);
         }
 
-        // Đánh dấu thẻ active
+        // Hoán đổi với ô bên cạnh bằng nút mũi tên ◀ ▶
+        function swapWithNeighbor(slotIndex, direction) {
+            const targetIndex = slotIndex + direction;
+            if (targetIndex < 0 || targetIndex >= currentOrder.length) return;
+
+            const temp = currentOrder[slotIndex];
+            currentOrder[slotIndex] = currentOrder[targetIndex];
+            currentOrder[targetIndex] = temp;
+
+            renderViewports();
+        }
+
+        // Đặt lại thứ tự mặc định (Daily Task & Lịch tàu lên hàng trên)
+        function resetDefaultOrder() {
+            currentOrder = [...DEFAULT_ORDER];
+            activeCardId = 'task';
+            showLoading();
+            renderViewports();
+        }
+
+        // Chọn Thẻ chức năng chính
+        function selectPrimaryCard(appId) {
+            activeCardId = appId;
+
+            // Đưa app được chọn lên vị trí đầu nếu đang ở layout 1 hoặc chuyển đổi
+            const foundIdx = currentOrder.indexOf(appId);
+            if (foundIdx > 0) {
+                currentOrder.splice(foundIdx, 1);
+                currentOrder.unshift(appId);
+            }
+
+            if (currentLayout === 1) {
+                renderViewports();
+            } else {
+                renderViewports();
+            }
+        }
+
+        // Đánh dấu viền sáng cho thẻ
         function updateCardHighlight() {
-            APPS.forEach((_, idx) => {
-                const card = document.getElementById(`card-${idx}`);
+            DEFAULT_ORDER.forEach(appId => {
+                const card = document.getElementById(`card-${appId}`);
                 if (card) {
-                    if (idx === activeCardIndex) {
+                    if (appId === activeCardId) {
                         card.classList.add('active');
                     } else {
                         card.classList.remove('active');
@@ -587,23 +699,19 @@
             [1, 2, 3, 4].forEach(n => {
                 const btn = document.getElementById(`btnLayout${n}`);
                 if (n === layoutNum) {
-                    btn.className = "px-2.5 py-1 rounded text-xs font-semibold transition flex items-center gap-1.5 bg-blue-600 text-white shadow";
+                    btn.className = "px-2 py-1 rounded text-xs font-semibold transition flex items-center gap-1.5 bg-blue-600 text-white shadow";
                 } else {
-                    btn.className = "px-2.5 py-1 rounded text-xs font-semibold transition flex items-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-800";
+                    btn.className = "px-2 py-1 rounded text-xs font-semibold transition flex items-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-800";
                 }
             });
 
             showLoading();
             renderViewports();
-            scheduleCollapse(2000);
         }
 
         function zoomToSingle(appId) {
-            const index = APPS.findIndex(a => a.id === appId);
-            if (index !== -1) {
-                activeCardIndex = index;
-                setLayout(1);
-            }
+            activeCardId = appId;
+            setLayout(1);
         }
 
         function refreshIframe(iframeId) {
@@ -624,10 +732,10 @@
                 overlay.classList.remove('opacity-100');
                 overlay.classList.add('opacity-0');
                 setTimeout(() => { overlay.style.display = 'none'; }, 200);
-            }, 350);
+            }, 300);
         }
 
-        // Thu gọn & Mở Header
+        // ================= XỬ LÝ KHÔNG THU HEADER KHI ĐANG TRỎ CHUỘT VÀO =================
         function expandHeader() {
             clearTimeout(hideTimer);
             headerWrapper.classList.remove('is-collapsed');
@@ -637,6 +745,8 @@
         }
 
         function collapseHeader() {
+            // TUYỆT ĐỐI KHÔNG THU NẾU ĐANG TRỎ CHUỘT HOẶC ĐÃ GHIM CỐ ĐỊNH
+            if (isHeaderHovered || isPinned) return;
             clearTimeout(hideTimer);
             headerWrapper.classList.add('is-collapsed');
             toggleIcon.className = 'fa-solid fa-chevron-down';
@@ -646,8 +756,13 @@
 
         function scheduleCollapse(delay = AUTO_HIDE_DELAY) {
             clearTimeout(hideTimer);
+            // Nếu con trỏ đang ở trên header hoặc đã ghim -> Không hẹn giờ thu
+            if (isHeaderHovered || isPinned) return;
+
             hideTimer = setTimeout(() => {
-                collapseHeader();
+                if (!isHeaderHovered && !isPinned) {
+                    collapseHeader();
+                }
             }, delay);
         }
 
@@ -660,22 +775,45 @@
             }
         }
 
-        // Sự kiện chuột máy tính
+        // Ghim hoặc bỏ ghim header cố định
+        function togglePinHeader() {
+            isPinned = !isPinned;
+            if (isPinned) {
+                clearTimeout(hideTimer);
+                expandHeader();
+                pinIcon.className = 'fa-solid fa-thumbtack text-amber-400 rotate-45';
+                pinText.innerText = 'Đã ghim';
+                pinText.className = 'hidden xl:inline text-[11px] text-amber-300 font-bold';
+                pinHeaderBtn.classList.add('border-amber-500/60', 'bg-amber-500/10');
+            } else {
+                pinIcon.className = 'fa-solid fa-thumbtack text-slate-400';
+                pinText.innerText = 'Tự thu';
+                pinText.className = 'hidden xl:inline text-[11px] text-slate-400';
+                pinHeaderBtn.classList.remove('border-amber-500/60', 'bg-amber-500/10');
+                scheduleCollapse(AUTO_HIDE_DELAY);
+            }
+        }
+
+        // SỰ KIỆN CHUỘT: Khi trỏ vào Header -> Luôn giữ mở và hủy mọi lệnh thu gọn
         headerWrapper.addEventListener('mouseenter', () => {
+            isHeaderHovered = true;
             clearTimeout(hideTimer);
             expandHeader();
         });
+
+        // Chỉ khi chuột rời khỏi vùng Header thì mới lên lịch thu gọn
         headerWrapper.addEventListener('mouseleave', () => {
+            isHeaderHovered = false;
             scheduleCollapse(AUTO_HIDE_DELAY);
         });
 
-        // Sự kiện chạm màn hình điện thoại / máy tính bảng
+        // Hỗ trợ thiết bị cảm ứng điện thoại / máy tính bảng
         document.addEventListener('touchstart', (e) => {
             const isInsideHeader = headerWrapper.contains(e.target);
             if (!isInsideHeader && !headerWrapper.classList.contains('is-collapsed')) {
-                collapseHeader();
+                if (!isPinned) collapseHeader();
             } else if (isInsideHeader) {
-                scheduleCollapse(AUTO_HIDE_DELAY);
+                clearTimeout(hideTimer);
             }
         }, { passive: true });
 
@@ -693,12 +831,16 @@
             }
         }
 
-        // Khởi chạy khi DOM sẵn sàng
+        // KHỞI ĐỘNG HỆ THỐNG
         window.addEventListener('DOMContentLoaded', () => {
             updateLiveDateTime();
             setInterval(updateLiveDateTime, 1000);
+
+            // Mặc định hiển thị bố cục 4 màn hình (Daily Task & Lịch tàu ở hàng trên)
             renderViewports();
-            scheduleCollapse(2500);
+
+            // Hiển thị 2.5s ban đầu để làm quen giao diện rồi tự thu gọn
+            scheduleCollapse(2600);
         });
     </script>
 </body>
