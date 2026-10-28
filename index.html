@@ -57,13 +57,13 @@
         .mini-toggle-pill {
             position: absolute;
             left: 50%;
-            bottom: -22px;
+            bottom: -24px;
             transform: translateX(-50%);
             background: rgba(11, 19, 38, 0.95);
-            border: 1px solid rgba(56, 189, 248, 0.25);
+            border: 1px solid rgba(56, 189, 248, 0.35);
             border-top: none;
             border-radius: 0 0 12px 12px;
-            padding: 2px 20px;
+            padding: 2px 22px;
             font-size: 11px;
             color: #94a3b8;
             box-shadow: 0 6px 20px rgba(0,0,0,0.6);
@@ -72,13 +72,13 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
         }
         .mini-toggle-pill:hover {
             color: #38bdf8;
             background: #1e293b;
-            border-color: rgba(56, 189, 248, 0.6);
-            bottom: -24px;
+            border-color: rgba(56, 189, 248, 0.8);
+            bottom: -26px;
         }
 
         /* Huy hiệu 1874 Hoàng Gia Nổi Bật */
@@ -232,21 +232,16 @@
                         <!-- BIỂU TƯỢNG: CHIM HẢI ÂU VÀ TÀU CONTAINER -->
                         <div class="relative w-12 h-12 rounded-xl bg-gradient-to-br from-blue-900/60 via-slate-900 to-cyan-950/80 border border-cyan-400/40 flex items-center justify-center shadow-[0_0_15px_rgba(6,182,212,0.3)] shrink-0 overflow-hidden">
                             <svg class="w-10 h-10" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Đôi chim hải âu chao lượn -->
                                 <path d="M14 15 C18 11, 23 13, 27 16 C31 13, 36 11, 40 15 C35 15, 30 18, 27 21 C24 18, 19 15, 14 15 Z" fill="#38bdf8"/>
                                 <path d="M38 10 C41 7, 44 8, 47 10 C50 8, 53 7, 56 10 C52 10, 49 12, 47 14 C45 12, 42 10, 38 10 Z" fill="#7dd3fc" opacity="0.85"/>
-                                <!-- Tàu Container cỡ lớn -->
                                 <path d="M6 46 L14 46 L20 35 L47 35 L55 46 L58 46 L55 52 L11 52 Z" fill="#0284c7"/>
-                                <!-- Khối Container đa màu -->
                                 <rect x="22" y="27" width="7" height="6" rx="1" fill="#f59e0b" />
                                 <rect x="31" y="27" width="7" height="6" rx="1" fill="#ef4444" />
                                 <rect x="40" y="27" width="7" height="6" rx="1" fill="#10b981" />
                                 <rect x="26" y="21" width="7" height="5" rx="1" fill="#38bdf8" />
                                 <rect x="35" y="21" width="7" height="5" rx="1" fill="#a855f7" />
-                                <!-- Ca-bin chỉ huy -->
                                 <path d="M48 24 L52 24 L53 35 L47 35 Z" fill="#e2e8f0"/>
                                 <circle cx="50" cy="27" r="1" fill="#0284c7"/>
-                                <!-- Sóng biển -->
                                 <path d="M4 53 C12 51, 18 55, 26 53 C34 51, 42 55, 50 53 C56 51, 60 53, 62 53" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round"/>
                             </svg>
                         </div>
@@ -340,7 +335,7 @@
                 <!-- DÒNG 2: 4 THẺ CHỨC NĂNG - MẶC ĐỊNH XẾP: DAILY TASK & LỊCH TÀU ĐẦU TIÊN -->
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5">
                     
-                    <!-- THẺ 1 (MẶC ĐỊNH ĐẦU): Daily Task -->
+                    <!-- THẺ 1: Daily Task -->
                     <div onclick="selectPrimaryCard('task')" id="card-task" 
                          style="--card-accent: #d97706; --card-glow: rgba(217, 119, 6, 0.4);" 
                          class="nav-card active bg-gradient-to-br from-amber-950/80 via-slate-900/90 to-orange-950/70 p-2.5">
@@ -358,7 +353,7 @@
                         </div>
                     </div>
 
-                    <!-- THẺ 2 (MẶC ĐỊNH THỨ HAI): Berthing Window -->
+                    <!-- THẺ 2: Berthing Window -->
                     <div onclick="selectPrimaryCard('berthing')" id="card-berthing" 
                          style="--card-accent: #0d9488; --card-glow: rgba(13, 148, 136, 0.4);" 
                          class="nav-card bg-gradient-to-br from-teal-950/80 via-slate-900/90 to-emerald-950/70 p-2.5">
@@ -376,7 +371,7 @@
                         </div>
                     </div>
 
-                    <!-- THẺ 3 (MẶC ĐỊNH THỨ BA): CSKH Daily -->
+                    <!-- THẺ 3: CSKH Daily -->
                     <div onclick="selectPrimaryCard('day')" id="card-day" 
                          style="--card-accent: #0284c7; --card-glow: rgba(2, 132, 199, 0.4);" 
                          class="nav-card bg-gradient-to-br from-sky-950/80 via-slate-900/90 to-blue-950/70 p-2.5">
@@ -394,7 +389,7 @@
                         </div>
                     </div>
 
-                    <!-- THẺ 4 (MẶC ĐỊNH THỨ TƯ): CSKH Monthly -->
+                    <!-- THẺ 4: CSKH Monthly -->
                     <div onclick="selectPrimaryCard('week')" id="card-week" 
                          style="--card-accent: #8b5cf6; --card-glow: rgba(139, 92, 246, 0.4);" 
                          class="nav-card bg-gradient-to-br from-indigo-950/80 via-slate-900/90 to-purple-950/70 p-2.5">
@@ -420,9 +415,9 @@
                     </span>
                     <div class="w-full overflow-hidden relative">
                         <div class="ticker-text">
-                            ✨ <b>Đổi chỗ cửa sổ:</b> Trên thanh tiêu đề của mỗi khung màn hình, dùng menu chọn hoặc nút ◀ ▶ để hoán đổi bất kỳ ứng dụng nào vào vị trí mong muốn. • 
+                            ✨ <b>Đổi chỗ cửa sổ:</b> Dùng menu chọn hoặc mũi tên ◀ ▶ trên góc mỗi ô để tráo đổi vị trí bất kỳ lúc nào. • 
                             🚢 <b>Bố cục mặc định:</b> Daily Task & Lịch tàu Berthing Window luôn xếp ở hàng trên cùng. • 
-                            📌 <b>Thanh điều khiển thông minh:</b> Khi bạn trỏ chuột vào header sẽ KHÔNG BAO GIỜ bị thu lại! Bạn cũng có thể bấm nút "Tự thu / Ghim" để khóa cố định thanh menu.
+                            📌 <b>Thu gọn / Mở Menu:</b> Bấm trực tiếp vào nút hình mũi tên ở mép dưới để đóng/mở ngay tức thì. Rê chuột vào header sẽ luôn giữ mở.
                         </div>
                     </div>
                 </div>
@@ -431,7 +426,7 @@
         </header>
 
         <!-- NÚT MINI THU/MỞ HEADER CHỦ ĐỘNG Ở MÉP DƯỚI -->
-        <button id="toggleHeaderBtn" onclick="toggleHeaderManually()" class="mini-toggle-pill" title="Nhấp để ẩn/hiện thanh điều khiển">
+        <button id="toggleHeaderBtn" onclick="toggleHeaderManually(event)" class="mini-toggle-pill" title="Nhấp để ẩn/hiện thanh điều khiển">
             <i id="toggleIcon" class="fa-solid fa-chevron-up"></i>
             <span id="toggleText" class="text-[10px] font-bold uppercase tracking-wider hidden sm:inline">Thu gọn</span>
         </button>
@@ -495,19 +490,20 @@
         const DEFAULT_ORDER = ['task', 'berthing', 'day', 'week'];
         let currentOrder = [...DEFAULT_ORDER];
 
-        let currentLayout = 4; // Mặc định mở 4 trang (Lưới 2x2: Hàng trên là Task & Tàu)
+        let currentLayout = 4;
         let activeCardId = 'task';
         
         let hideTimer = null;
-        let isHeaderHovered = false; // Cờ kiểm soát trỏ chuột vào header
-        let isPinned = false;         // Cờ ghim header cố định
-        const AUTO_HIDE_DELAY = 2600;
+        let isHeaderHovered = false; 
+        let isPinned = false;        
+        const AUTO_HIDE_DELAY = 1200; // Tự thu sau 1.2s nhạy bén
 
         const headerWrapper = document.getElementById('headerWrapper');
         const toggleIcon = document.getElementById('toggleIcon');
         const toggleBtn = document.getElementById('toggleHeaderBtn');
         const toggleText = document.getElementById('toggleText');
         const gridContainer = document.getElementById('gridContainer');
+        const mainViewer = document.getElementById('mainViewer');
         const pinHeaderBtn = document.getElementById('pinHeaderBtn');
         const pinIcon = document.getElementById('pinIcon');
         const pinText = document.getElementById('pinText');
@@ -558,7 +554,6 @@
             if (currentLayout === 1) {
                 displayIds = [activeCardId];
             } else if (currentLayout === 2) {
-                // Hiển thị 2 ứng dụng đầu trong danh sách thứ tự hiện tại
                 displayIds = [currentOrder[0], currentOrder[1]];
             } else if (currentLayout === 3) {
                 displayIds = [currentOrder[0], currentOrder[1], currentOrder[2]];
@@ -572,7 +567,6 @@
                 pane.className = `pane-container pane-slot-${slotIdx}`;
                 const showHeader = currentLayout > 1;
 
-                // Tạo danh sách tùy chọn cho thẻ select đổi chỗ
                 let selectOptionsHtml = '';
                 DEFAULT_ORDER.forEach(idKey => {
                     const item = APPS_DICT[idKey];
@@ -583,7 +577,6 @@
                 pane.innerHTML = `
                     ${showHeader ? `
                     <div class="pane-header">
-                        <!-- Nhóm Đổi chỗ cửa sổ: Nút Mũi tên & Dropdown -->
                         <div class="flex items-center gap-1.5 truncate">
                             <span class="text-[10px] font-bold text-slate-400 bg-slate-800/80 px-1.5 py-0.5 rounded">Ô ${slotIdx + 1}</span>
                             
@@ -591,7 +584,6 @@
                                 ${selectOptionsHtml}
                             </select>
 
-                            <!-- Nút mũi tên hoán đổi nhanh với ô liền kề -->
                             <div class="flex items-center gap-0.5 ml-1">
                                 <button onclick="swapWithNeighbor(${slotIdx}, -1)" title="Đổi chỗ với ô phía trước" class="px-1 py-0.5 text-slate-400 hover:text-cyan-400 text-[10px] rounded hover:bg-slate-800">
                                     <i class="fa-solid fa-chevron-left"></i>
@@ -602,7 +594,6 @@
                             </div>
                         </div>
 
-                        <!-- Nhóm Tiện ích bên phải cửa sổ -->
                         <div class="flex items-center gap-2">
                             <button onclick="refreshIframe('iframe-${app.id}')" title="Tải lại khung này" class="text-slate-400 hover:text-white transition">
                                 <i class="fa-solid fa-rotate-right text-[11px]"></i>
@@ -623,12 +614,10 @@
             updateCardHighlight();
         }
 
-        // Đổi chức năng hiển thị tại một ô cụ thể bằng Dropdown
         function changeSlotApp(slotIndex, newAppId) {
             const currentAppIdAtSlot = currentOrder[slotIndex];
             if (currentAppIdAtSlot === newAppId) return;
 
-            // Tìm xem newAppId đang nằm ở ô nào để tráo đổi 2 vị trí với nhau
             const existingIdx = currentOrder.indexOf(newAppId);
             if (existingIdx !== -1) {
                 currentOrder[slotIndex] = newAppId;
@@ -641,7 +630,6 @@
             renderViewports();
         }
 
-        // Hoán đổi với ô bên cạnh bằng nút mũi tên ◀ ▶
         function swapWithNeighbor(slotIndex, direction) {
             const targetIndex = slotIndex + direction;
             if (targetIndex < 0 || targetIndex >= currentOrder.length) return;
@@ -653,7 +641,6 @@
             renderViewports();
         }
 
-        // Đặt lại thứ tự mặc định (Daily Task & Lịch tàu lên hàng trên)
         function resetDefaultOrder() {
             currentOrder = [...DEFAULT_ORDER];
             activeCardId = 'task';
@@ -661,25 +648,16 @@
             renderViewports();
         }
 
-        // Chọn Thẻ chức năng chính
         function selectPrimaryCard(appId) {
             activeCardId = appId;
-
-            // Đưa app được chọn lên vị trí đầu nếu đang ở layout 1 hoặc chuyển đổi
             const foundIdx = currentOrder.indexOf(appId);
             if (foundIdx > 0) {
                 currentOrder.splice(foundIdx, 1);
                 currentOrder.unshift(appId);
             }
-
-            if (currentLayout === 1) {
-                renderViewports();
-            } else {
-                renderViewports();
-            }
+            renderViewports();
         }
 
-        // Đánh dấu viền sáng cho thẻ
         function updateCardHighlight() {
             DEFAULT_ORDER.forEach(appId => {
                 const card = document.getElementById(`card-${appId}`);
@@ -693,7 +671,6 @@
             });
         }
 
-        // Chuyển đổi Layout 1, 2, 3, 4
         function setLayout(layoutNum) {
             currentLayout = layoutNum;
             [1, 2, 3, 4].forEach(n => {
@@ -735,7 +712,7 @@
             }, 300);
         }
 
-        // ================= XỬ LÝ KHÔNG THU HEADER KHI ĐANG TRỎ CHUỘT VÀO =================
+        // ================= KHẮC PHỤC TRIỆT ĐỂ CƠ CHẾ ẨN/HIỆN & NÚT THU GỌN =================
         function expandHeader() {
             clearTimeout(hideTimer);
             headerWrapper.classList.remove('is-collapsed');
@@ -744,9 +721,11 @@
             toggleBtn.title = 'Nhấp để thu gọn thanh menu';
         }
 
-        function collapseHeader() {
-            // TUYỆT ĐỐI KHÔNG THU NẾU ĐANG TRỎ CHUỘT HOẶC ĐÃ GHIM CỐ ĐỊNH
-            if (isHeaderHovered || isPinned) return;
+        function collapseHeader(force = false) {
+            // Nếu không bị ép buộc (force = false), chỉ thu khi không hover và không ghim
+            if (!force && (isHeaderHovered || isPinned)) return;
+            if (isPinned && !force) return;
+
             clearTimeout(hideTimer);
             headerWrapper.classList.add('is-collapsed');
             toggleIcon.className = 'fa-solid fa-chevron-down';
@@ -756,26 +735,31 @@
 
         function scheduleCollapse(delay = AUTO_HIDE_DELAY) {
             clearTimeout(hideTimer);
-            // Nếu con trỏ đang ở trên header hoặc đã ghim -> Không hẹn giờ thu
-            if (isHeaderHovered || isPinned) return;
-
+            if (isPinned) return;
             hideTimer = setTimeout(() => {
                 if (!isHeaderHovered && !isPinned) {
-                    collapseHeader();
+                    collapseHeader(true); // Ép buộc thu khi hết thời gian chờ
                 }
             }, delay);
         }
 
-        function toggleHeaderManually() {
+        // NÚT BẤM THU GỌN CHỦ ĐỘNG: Luôn thực thi ngay lập tức
+        function toggleHeaderManually(e) {
+            if (e) e.stopPropagation(); // Tránh kích hoạt sự kiện cha
+            clearTimeout(hideTimer);
+
             if (headerWrapper.classList.contains('is-collapsed')) {
+                // Đang đóng -> Bấm thì MỞ RA
                 expandHeader();
-                scheduleCollapse(3500);
+                scheduleCollapse(3000);
             } else {
-                collapseHeader();
+                // Đang mở -> Bấm là LẬP TỨC THU LẠI
+                isHeaderHovered = false;
+                collapseHeader(true); // Tham số true đảm bảo thu gọn ngay lập tức
             }
         }
 
-        // Ghim hoặc bỏ ghim header cố định
+        // Ghim / Tự thu
         function togglePinHeader() {
             isPinned = !isPinned;
             if (isPinned) {
@@ -794,26 +778,42 @@
             }
         }
 
-        // SỰ KIỆN CHUỘT: Khi trỏ vào Header -> Luôn giữ mở và hủy mọi lệnh thu gọn
+        // KHI RÊ CHUỘT VÀO HEADER: Luôn giữ mở, hủy đếm ngược
         headerWrapper.addEventListener('mouseenter', () => {
             isHeaderHovered = true;
             clearTimeout(hideTimer);
-            expandHeader();
+            if (!headerWrapper.classList.contains('is-collapsed')) {
+                expandHeader();
+            }
         });
 
-        // Chỉ khi chuột rời khỏi vùng Header thì mới lên lịch thu gọn
+        // KHI RỜI CHUỘT KHỎI HEADER: Tự động lên lịch thu gọn sau 1.2s
         headerWrapper.addEventListener('mouseleave', () => {
             isHeaderHovered = false;
             scheduleCollapse(AUTO_HIDE_DELAY);
         });
 
-        // Hỗ trợ thiết bị cảm ứng điện thoại / máy tính bảng
+        // GIẢI PHÁP BẪY CHUỘT IFRAME: Khi chuột đi xuống vùng làm việc chính
+        mainViewer.addEventListener('mouseenter', () => {
+            isHeaderHovered = false;
+            if (!headerWrapper.classList.contains('is-collapsed')) {
+                scheduleCollapse(500); // Rời xuống màn hình là thu nhanh sau 0.5s
+            }
+        });
+
+        // Khi người dùng bấm/tương tác vào bên trong Iframe dashboard
+        window.addEventListener('blur', () => {
+            isHeaderHovered = false;
+            if (!isPinned) {
+                collapseHeader(true);
+            }
+        });
+
+        // Cảm ứng điện thoại
         document.addEventListener('touchstart', (e) => {
-            const isInsideHeader = headerWrapper.contains(e.target);
-            if (!isInsideHeader && !headerWrapper.classList.contains('is-collapsed')) {
-                if (!isPinned) collapseHeader();
-            } else if (isInsideHeader) {
-                clearTimeout(hideTimer);
+            const isInside = headerWrapper.contains(e.target);
+            if (!isInside && !headerWrapper.classList.contains('is-collapsed')) {
+                if (!isPinned) collapseHeader(true);
             }
         }, { passive: true });
 
@@ -835,12 +835,9 @@
         window.addEventListener('DOMContentLoaded', () => {
             updateLiveDateTime();
             setInterval(updateLiveDateTime, 1000);
-
-            // Mặc định hiển thị bố cục 4 màn hình (Daily Task & Lịch tàu ở hàng trên)
             renderViewports();
-
-            // Hiển thị 2.5s ban đầu để làm quen giao diện rồi tự thu gọn
-            scheduleCollapse(2600);
+            // Ban đầu hiển thị 2s để nhận diện thương hiệu rồi tự thu gọn
+            scheduleCollapse(2000);
         });
     </script>
 </body>
