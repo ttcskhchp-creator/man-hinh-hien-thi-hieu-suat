@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Dashboard Vận Hành CSKH247 - Cảng Hải Phòng</title>
+    <title>Tổ Hợp Chức Năng Giám Sát & Báo Cáo - Trung Tâm Khai Thác & DVKH Cảng Hải Phòng</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -12,17 +12,17 @@
             theme: {
                 extend: {
                     colors: {
-                        darkBg: '#080c14',
-                        cardBg: '#0f172a',
+                        darkBg: '#050811',
+                        cardBg: '#0b1120',
                     }
                 }
             }
         }
     </script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- FontAwesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
         
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         html, body {
@@ -31,333 +31,588 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            font-family: 'Inter', sans-serif;
-            background-color: #080c14;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #050811;
+            color: #f1f5f9;
         }
 
-        /* Khung Header trượt mượt mà */
+        /* Thanh Header trượt mượt mà */
         .auto-hide-wrapper {
-            transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
             transform: translateY(0);
         }
-
-        /* Trạng thái thu gọn: Chỉ lộ đúng nút bấm mini ở mép */
         .auto-hide-wrapper.is-collapsed {
             transform: translateY(-100%);
             box-shadow: none;
         }
 
         .glass-header {
-            background: rgba(11, 15, 25, 0.94);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .glass-card {
-            background: rgba(15, 23, 42, 0.95);
+            background: linear-gradient(180deg, rgba(8, 14, 29, 0.97) 0%, rgba(5, 10, 22, 0.95) 100%);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(56, 189, 248, 0.15);
         }
 
-        /* Nút mini ẩn/hiện chủ động nằm ở mép dưới header */
+        /* Nút mini ẩn/hiện mép dưới Header */
         .mini-toggle-pill {
             position: absolute;
             left: 50%;
-            bottom: -18px;
+            bottom: -22px;
             transform: translateX(-50%);
-            background: rgba(15, 23, 42, 0.95);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(11, 19, 38, 0.95);
+            border: 1px solid rgba(56, 189, 248, 0.25);
             border-top: none;
-            border-radius: 0 0 10px 10px;
-            padding: 2px 14px;
-            font-size: 10px;
+            border-radius: 0 0 12px 12px;
+            padding: 2px 20px;
+            font-size: 11px;
             color: #94a3b8;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.6);
             cursor: pointer;
             z-index: 60;
             display: flex;
             align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
+            gap: 6px;
+            transition: all 0.25s ease;
         }
-        .mini-toggle-pill:hover, .mini-toggle-pill:active {
+        .mini-toggle-pill:hover {
             color: #38bdf8;
-            background: #0f172a;
-            border-color: rgba(56, 189, 248, 0.4);
+            background: #1e293b;
+            border-color: rgba(56, 189, 248, 0.6);
+            bottom: -24px;
         }
 
-        /* Xử lý cuộn cho các dashboard con */
+        /* Huy hiệu 1874 Hoàng Gia Cực Nổi Bật */
+        .badge-1874 {
+            background: linear-gradient(135deg, #1e1b18 0%, #291e0a 50%, #151006 100%);
+            border: 1.5px solid #f59e0b;
+            box-shadow: 0 0 16px rgba(245, 158, 11, 0.35), inset 0 0 12px rgba(245, 158, 11, 0.2);
+            position: relative;
+        }
+        .badge-1874::after {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            border-radius: inherit;
+            background: linear-gradient(90deg, #f59e0b, #fef08a, #d97706);
+            z-index: -1;
+            filter: blur(4px);
+            opacity: 0.4;
+        }
+
+        /* Thẻ Điều Hướng 4 Chức Năng */
+        .nav-card {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .nav-card:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.15);
+        }
+        .nav-card.active {
+            box-shadow: 0 0 0 2px var(--card-accent), 0 8px 24px var(--card-glow);
+            border-color: var(--card-accent);
+        }
+
+        .nav-card-watermark {
+            position: absolute;
+            right: -6px;
+            bottom: -8px;
+            font-size: 42px;
+            opacity: 0.12;
+            pointer-events: none;
+            transition: transform 0.3s ease;
+        }
+        .nav-card:hover .nav-card-watermark {
+            transform: scale(1.15) rotate(-6deg);
+            opacity: 0.25;
+        }
+
+        /* Lưới hiển thị các màn hình */
+        .grid-viewer {
+            display: grid;
+            width: 100%;
+            height: 100%;
+            gap: 4px;
+            background-color: #060a14;
+            padding: 4px;
+            transition: all 0.3s ease;
+        }
+        .grid-layout-1 { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+        .grid-layout-2 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; }
+        .grid-layout-3 { grid-template-columns: 1.2fr 1fr; grid-template-rows: 1fr 1fr; }
+        .grid-layout-3 > .pane-slot-0 { grid-row: span 2; }
+        .grid-layout-4 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+
+        @media (max-width: 860px) {
+            .grid-layout-2, .grid-layout-3, .grid-layout-4 {
+                grid-template-columns: 1fr !important;
+                grid-template-rows: repeat(auto-fit, minmax(300px, 1fr)) !important;
+                overflow-y: auto !important;
+            }
+        }
+
+        .pane-container {
+            position: relative;
+            background: #080d1a;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .pane-header {
+            height: 28px;
+            background: rgba(15, 23, 42, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10px;
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+
         .dashboard-iframe {
             width: 100%;
             height: 100%;
             border: none;
-            overflow-y: auto !important;
-            overflow-x: auto !important;
-            -webkit-overflow-scrolling: touch;
+            background: #040711;
         }
 
-        ::-webkit-scrollbar { width: 4px; height: 4px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        /* Ticker chạy chữ */
+        @keyframes marqueeAnim {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .ticker-text {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marqueeAnim 36s linear infinite;
+        }
+        .ticker-wrapper:hover .ticker-text {
+            animation-play-state: paused;
+        }
     </style>
 </head>
 <body class="bg-darkBg text-slate-100 h-screen w-screen flex flex-col relative select-none">
 
-    <!-- KHU VỰC HEADER NỔI -->
-    <div id="headerWrapper" class="auto-hide-wrapper fixed top-0 left-0 right-0 z-50 flex flex-col">
-        
-        <!-- Header thanh công cụ chính -->
-        <header class="glass-header px-3 py-1.5 shadow-2xl">
-            <div class="max-w-[1920px] mx-auto flex flex-wrap items-center justify-between gap-1.5">
+    <!-- KHU VỰC HEADER TỔ HỢP ĐIỀU HÀNH -->
+    <div id="headerWrapper" class="auto-hide-wrapper fixed top-0 left-0 right-0 z-50 flex flex-col shadow-2xl">
+        <header class="glass-header px-4 pt-2.5 pb-2.5 border-b border-cyan-500/20">
+            <div class="max-w-[2100px] mx-auto flex flex-col gap-2.5">
                 
-                <!-- Nhóm các Tab điều hướng -->
-                <div class="flex items-center gap-1 bg-slate-900/90 border border-slate-800/80 p-0.5 rounded-lg shadow-inner overflow-x-auto max-w-full">
-                    <button onclick="switchView('day')" id="tab-day" class="px-2.5 py-1 rounded-md text-[11px] font-medium transition flex items-center gap-1.5 bg-blue-600 text-white shadow-sm shrink-0">
-                        <i class="fa-solid fa-calendar-day text-[10px]"></i> CSKH247 - Ngày
-                    </button>
-                    <button onclick="switchView('week')" id="tab-week" class="px-2.5 py-1 rounded-md text-[11px] font-medium transition flex items-center gap-1.5 text-slate-400 hover:text-white shrink-0">
-                        <i class="fa-solid fa-calendar-week text-[10px]"></i> CSKH247 - Tuần/Tháng
-                    </button>
+                <!-- DÒNG 1: THƯƠNG HIỆU, LOGO HẢI ÂU - TÀU CONTAINER & HUY HIỆU 1874 -->
+                <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800/80 pb-2">
                     
-                    <!-- Tab Chức năng 3 -->
-                    <button onclick="switchView('extra1')" id="tab-extra1" class="px-2.5 py-1 rounded-md text-[11px] font-medium transition flex items-center gap-1.5 text-slate-400 hover:text-white hidden shrink-0">
-                        <i class="fa-solid fa-chart-pie text-[10px]" id="icon-extra1"></i> <span id="label-extra1">Chức Năng 3</span>
-                    </button>
-                    <!-- Tab Chức năng 4 -->
-                    <button onclick="switchView('extra2')" id="tab-extra2" class="px-2.5 py-1 rounded-md text-[11px] font-medium transition flex items-center gap-1.5 text-slate-400 hover:text-white hidden shrink-0">
-                        <i class="fa-solid fa-chart-line text-[10px]" id="icon-extra2"></i> <span id="label-extra2">Chức Năng 4</span>
-                    </button>
-                </div>
+                    <!-- Nhóm Logo + Tên Tổ Hợp & Đơn Vị Vận Hành -->
+                    <div class="flex items-center gap-3">
+                        
+                        <!-- BIỂU TƯỢNG ĐỒNG BỘ: CHIM HẢI ÂU VÀ TÀU CONTAINER -->
+                        <div class="relative w-12 h-12 rounded-xl bg-gradient-to-br from-blue-900/60 via-slate-900 to-cyan-950/80 border border-cyan-400/40 flex items-center justify-center shadow-[0_0_15px_rgba(6,182,212,0.3)] shrink-0 overflow-hidden">
+                            <!-- SVG Chim Hải Âu Lượn Sóng & Tàu Container Chở Hàng -->
+                            <svg class="w-10 h-10" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Đôi chim hải âu chao lượn -->
+                                <path d="M14 15 C18 11, 23 13, 27 16 C31 13, 36 11, 40 15 C35 15, 30 18, 27 21 C24 18, 19 15, 14 15 Z" fill="#38bdf8"/>
+                                <path d="M38 10 C41 7, 44 8, 47 10 C50 8, 53 7, 56 10 C52 10, 49 12, 47 14 C45 12, 42 10, 38 10 Z" fill="#7dd3fc" opacity="0.85"/>
+                                <!-- Tàu Container cỡ lớn -->
+                                <path d="M6 46 L14 46 L20 35 L47 35 L55 46 L58 46 L55 52 L11 52 Z" fill="#0284c7"/>
+                                <!-- Khối Container xếp tầng -->
+                                <rect x="22" y="27" width="7" height="6" rx="1" fill="#f59e0b" />
+                                <rect x="31" y="27" width="7" height="6" rx="1" fill="#ef4444" />
+                                <rect x="40" y="27" width="7" height="6" rx="1" fill="#10b981" />
+                                <rect x="26" y="21" width="7" height="5" rx="1" fill="#38bdf8" />
+                                <rect x="35" y="21" width="7" height="5" rx="1" fill="#a855f7" />
+                                <!-- Ca-bin lái đài chỉ huy -->
+                                <path d="M48 24 L52 24 L53 35 L47 35 Z" fill="#e2e8f0"/>
+                                <circle cx="50" cy="27" r="1" fill="#0284c7"/>
+                                <!-- Làn sóng biển đáy -->
+                                <path d="M4 53 C12 51, 18 55, 26 53 C34 51, 42 55, 50 53 C56 51, 60 53, 62 53" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round"/>
+                            </svg>
+                        </div>
 
-                <!-- Tiện ích bên phải -->
-                <div class="flex items-center gap-1.5 text-[11px]">
-                    <div class="hidden md:flex items-center gap-1.5 px-2 py-0.5 rounded bg-slate-900/60 border border-slate-800 text-slate-400 text-[10px]">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                        <span id="currentActiveLinkText" class="truncate max-w-[140px]">Đang kết nối...</span>
+                        <!-- Khối Văn Bản Tên Đơn Vị & Tổ Hợp -->
+                        <div class="flex flex-col">
+                            <div class="flex items-center gap-2">
+                                <h1 class="text-sm md:text-base font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-100 to-sky-300 uppercase leading-snug">
+                                    TỔ HỢP CHỨC NĂNG GIÁM SÁT VÀ BÁO CÁO
+                                </h1>
+                                <span class="hidden sm:inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> TRỰC TUYẾN 24/7
+                                </span>
+                            </div>
+                            <div class="text-[11px] font-bold text-cyan-300 tracking-wide flex items-center gap-1.5 flex-wrap">
+                                <span>Trung tâm Khai thác và Dịch vụ khách hàng - Công ty CP Cảng Hải Phòng</span>
+                            </div>
+                            <div class="text-[10px] text-slate-400 font-medium italic truncate max-w-xl">
+                                Operations & Customer Service Center - Port of Haiphong JSC • Vận hành & Thiết kế
+                            </div>
+                        </div>
+
+                        <!-- HUY HIỆU DI SẢN 1874 TRANG TRÍ HOÀNG GIA NỔI BẬT -->
+                        <div class="badge-1874 px-3 py-1 rounded-xl flex items-center gap-2 shadow-lg ml-1 hidden lg:flex">
+                            <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-950 font-black shadow">
+                                <i class="fa-solid fa-anchor text-xs"></i>
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-[8px] uppercase tracking-widest text-amber-300/90 font-extrabold leading-none">CẢNG HẢI PHÒNG</span>
+                                <span class="text-xs font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-300 to-amber-500 font-mono tracking-wider">
+                                    EST. 1874
+                                </span>
+                            </div>
+                            <div class="h-5 w-px bg-amber-500/40"></div>
+                            <span class="text-[9px] bg-amber-400 text-slate-950 font-black px-1.5 py-0.5 rounded shadow">150+ NĂM</span>
+                        </div>
                     </div>
 
-                    <a id="openNewTabBtn" href="#" target="_blank" title="Mở trang hiện tại ở tab mới" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/80 rounded-md transition flex items-center gap-1 text-[11px]">
-                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> <span class="hidden sm:inline">Tab mới</span>
-                    </a>
+                    <!-- Lời chúc, Đồng hồ & Bộ chọn Đa màn hình -->
+                    <div class="flex items-center gap-2.5 ml-auto">
+                        
+                        <!-- Lời chúc theo ca trực -->
+                        <div class="hidden xl:flex items-center gap-1.5 text-xs text-amber-300 font-medium bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/30 shadow-inner">
+                            <i id="greetingIcon" class="fa-solid fa-sun text-amber-400"></i>
+                            <span id="greetingText">Chúc ca làm việc hiệu quả!</span>
+                        </div>
 
-                    <!-- Nút cấu hình link -->
-                    <button onclick="openConfigModal()" class="px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/80 text-[11px] font-medium transition flex items-center gap-1.5 shadow-sm">
-                        <i class="fa-solid fa-gear text-amber-400 text-[10px]"></i> <span class="hidden sm:inline">Cấu hình</span> (6868)
-                    </button>
+                        <!-- Lịch ngày & Đồng hồ thực -->
+                        <div class="hidden md:flex items-center gap-2 text-xs text-slate-300 bg-slate-900/90 px-3 py-1 rounded-lg border border-slate-800">
+                            <i class="fa-regular fa-calendar-days text-cyan-400"></i>
+                            <span id="liveDate">Đang tải...</span>
+                            <span class="text-slate-600">|</span>
+                            <i class="fa-regular fa-clock text-emerald-400"></i>
+                            <span id="liveClock" class="font-mono font-bold text-emerald-300 tracking-wider">00:00:00</span>
+                        </div>
+
+                        <!-- Cụm chọn bố cục 1, 2, 3, 4 màn hình -->
+                        <div class="bg-slate-950 p-1 rounded-lg border border-slate-800 flex items-center gap-1 shadow-inner">
+                            <button onclick="setLayout(1)" id="btnLayout1" title="Toàn màn hình thẻ chọn" class="px-2.5 py-1 rounded text-xs font-semibold transition flex items-center gap-1.5 bg-blue-600 text-white shadow">
+                                <i class="fa-solid fa-square"></i> <span class="hidden sm:inline">1 Trang</span>
+                            </button>
+                            <button onclick="setLayout(2)" id="btnLayout2" title="Chia đôi 2 màn hình" class="px-2.5 py-1 rounded text-xs font-semibold transition flex items-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-800">
+                                <i class="fa-solid fa-columns"></i> <span class="hidden sm:inline">2 Trang</span>
+                            </button>
+                            <button onclick="setLayout(3)" id="btnLayout3" title="Bố cục 3 màn hình" class="px-2.5 py-1 rounded text-xs font-semibold transition flex items-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-800">
+                                <i class="fa-solid fa-table-columns"></i> <span class="hidden sm:inline">3 Trang</span>
+                            </button>
+                            <button onclick="setLayout(4)" id="btnLayout4" title="Mở cả 4 màn hình cùng lúc" class="px-2.5 py-1 rounded text-xs font-semibold transition flex items-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-800">
+                                <i class="fa-solid fa-border-all"></i> <span class="hidden sm:inline">4 Trang (2x2)</span>
+                            </button>
+                        </div>
+
+                        <!-- Phóng to toàn màn hình -->
+                        <button onclick="toggleFullScreen()" title="Toàn màn hình F11" class="p-2 bg-slate-900 hover:bg-slate-800 border border-slate-700/80 rounded-lg text-slate-300 hover:text-white text-xs transition">
+                            <i id="fullscreenIcon" class="fa-solid fa-expand"></i>
+                        </button>
+                    </div>
                 </div>
+
+                <!-- DÒNG 2: 4 THẺ CHỨC NĂNG VỚI MÀU SẮC ĐẶC TRƯNG & HÌNH NỀN BIỂU TƯỢNG -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5">
+                    
+                    <!-- THẺ 1: CSKH Daily -->
+                    <div onclick="selectPrimaryCard(0)" id="card-0" 
+                         style="--card-accent: #0284c7; --card-glow: rgba(2, 132, 199, 0.4);" 
+                         class="nav-card active bg-gradient-to-br from-sky-950/80 via-slate-900/90 to-blue-950/70 p-2.5">
+                        <i class="fa-solid fa-chart-pie nav-card-watermark text-sky-400"></i>
+                        <div class="flex items-center gap-2.5 relative z-10">
+                            <div class="w-9 h-9 rounded-lg bg-sky-500/20 border border-sky-400/40 flex items-center justify-center text-sky-400 shadow-inner">
+                                <i class="fa-solid fa-calendar-day text-sm"></i>
+                            </div>
+                            <div class="flex flex-col min-w-0">
+                                <span class="text-xs font-bold text-white tracking-wide truncate">CSKH Daily</span>
+                                <span class="text-[10px] text-sky-300/80 truncate">Giám sát & Báo cáo ngày</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- THẺ 2: CSKH Monthly -->
+                    <div onclick="selectPrimaryCard(1)" id="card-1" 
+                         style="--card-accent: #8b5cf6; --card-glow: rgba(139, 92, 246, 0.4);" 
+                         class="nav-card bg-gradient-to-br from-indigo-950/80 via-slate-900/90 to-purple-950/70 p-2.5">
+                        <i class="fa-solid fa-chart-line nav-card-watermark text-purple-400"></i>
+                        <div class="flex items-center gap-2.5 relative z-10">
+                            <div class="w-9 h-9 rounded-lg bg-purple-500/20 border border-purple-400/40 flex items-center justify-center text-purple-400 shadow-inner">
+                                <i class="fa-solid fa-calendar-week text-sm"></i>
+                            </div>
+                            <div class="flex flex-col min-w-0">
+                                <span class="text-xs font-bold text-white tracking-wide truncate">CSKH Monthly</span>
+                                <span class="text-[10px] text-purple-300/80 truncate">Tổng hợp Tuần & Tháng</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- THẺ 3: Berthing Window -->
+                    <div onclick="selectPrimaryCard(2)" id="card-2" 
+                         style="--card-accent: #0d9488; --card-glow: rgba(13, 148, 136, 0.4);" 
+                         class="nav-card bg-gradient-to-br from-teal-950/80 via-slate-900/90 to-emerald-950/70 p-2.5">
+                        <i class="fa-solid fa-ship nav-card-watermark text-teal-400"></i>
+                        <div class="flex items-center gap-2.5 relative z-10">
+                            <div class="w-9 h-9 rounded-lg bg-teal-500/20 border border-teal-400/40 flex items-center justify-center text-teal-400 shadow-inner">
+                                <i class="fa-solid fa-ferry text-sm"></i>
+                            </div>
+                            <div class="flex flex-col min-w-0">
+                                <span class="text-xs font-bold text-white tracking-wide truncate">Berthing Window</span>
+                                <span class="text-[10px] text-teal-300/80 truncate">Kế hoạch tàu & Cầu bến</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- THẺ 4: Daily Task -->
+                    <div onclick="selectPrimaryCard(3)" id="card-3" 
+                         style="--card-accent: #d97706; --card-glow: rgba(217, 119, 6, 0.4);" 
+                         class="nav-card bg-gradient-to-br from-amber-950/80 via-slate-900/90 to-orange-950/70 p-2.5">
+                        <i class="fa-solid fa-clipboard-check nav-card-watermark text-amber-400"></i>
+                        <div class="flex items-center gap-2.5 relative z-10">
+                            <div class="w-9 h-9 rounded-lg bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-amber-400 shadow-inner">
+                                <i class="fa-solid fa-list-check text-sm"></i>
+                            </div>
+                            <div class="flex flex-col min-w-0">
+                                <span class="text-xs font-bold text-white tracking-wide truncate">Daily Task</span>
+                                <span class="text-[10px] text-amber-300/80 truncate">Sự vụ & Nhiệm vụ thường nhật</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DÒNG 3: DÒNG CHỮ HƯỚNG DẪN NHỎ CÁCH SỬ DỤNG MỞ CÁC CHỨC NĂNG (TICKER) -->
+                <div class="ticker-wrapper overflow-hidden bg-slate-950/80 border border-cyan-500/20 rounded-md py-1 px-3 text-[11px] text-slate-300 flex items-center">
+                    <span class="bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 px-2 py-0.5 rounded text-[10px] font-bold uppercase mr-2.5 shrink-0 flex items-center gap-1">
+                        <i class="fa-solid fa-circle-info"></i> HƯỚNG DẪN SỬ DỤNG
+                    </span>
+                    <div class="w-full overflow-hidden relative">
+                        <div class="ticker-text">
+                            🚢 <b>Mở chức năng độc lập:</b> Nhấp chuột trực tiếp vào 1 trong 4 thẻ (CSKH Daily, CSKH Monthly, Berthing Window, Daily Task) để xem toàn màn hình. • 
+                            🖥️ <b>Mở đa màn hình (2, 3, 4 trang):</b> Nhấp các nút chuyển bố cục ở góc trên bên phải để theo dõi song song nhiều hệ thống trên cùng một giao diện. • 
+                            🔄 <b>Tiện ích cửa sổ:</b> Mỗi khung đều hỗ trợ nút Tải lại (Refresh) và Mở ở tab mới độc lập. • 
+                            ⚓ <b>Mở rộng tối đa:</b> Thanh điều khiển sẽ tự động thu gọn sau 2.5s hoặc bấm nút mũi tên ở mép dưới để ẩn/hiện tùy ý.
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </header>
 
-        <!-- NÚT THU/MỞ NHỎ NẰM NGAY CHÍNH GIỮA MÉP DƯỚI HEADER -->
-        <button id="toggleHeaderBtn" onclick="toggleHeaderManually()" class="mini-toggle-pill" title="Nhấp để ẩn/hiện menu">
+        <!-- NÚT MINI THU/MỞ HEADER CHỦ ĐỘNG Ở MÉP DƯỚI -->
+        <button id="toggleHeaderBtn" onclick="toggleHeaderManually()" class="mini-toggle-pill" title="Nhấp để ẩn/hiện thanh điều khiển">
             <i id="toggleIcon" class="fa-solid fa-chevron-up"></i>
+            <span id="toggleText" class="text-[10px] font-bold uppercase tracking-wider hidden sm:inline">Thu gọn</span>
         </button>
     </div>
 
-    <!-- MAIN VIEWER HIỂN THỊ TRỌN VẸN TOÀN MÀN HÌNH -->
-    <main id="mainViewer" class="w-full h-full relative overflow-hidden bg-slate-950 flex flex-col">
+    <!-- MAIN VIEWER - KHÔNG GIAN LƯỚI ĐA CỬA SỔ HIỂN THỊ -->
+    <main id="mainViewer" class="w-full h-full relative overflow-hidden bg-slate-950">
         <!-- Vòng xoay tải trang -->
-        <div id="loadingOverlay" class="absolute inset-0 bg-slate-950/80 backdrop-blur-sm z-20 flex flex-col items-center justify-center gap-2 transition-opacity duration-300 pointer-events-none opacity-0" style="display: none;">
-            <div class="w-8 h-8 border-3 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-            <p class="text-[11px] text-slate-400">Đang đồng bộ dữ liệu...</p>
+        <div id="loadingOverlay" class="absolute inset-0 bg-slate-950/85 backdrop-blur-sm z-30 flex flex-col items-center justify-center gap-2.5 transition-opacity duration-300 pointer-events-none opacity-0" style="display: none;">
+            <div class="w-9 h-9 border-3 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>
+            <p class="text-xs font-semibold text-cyan-200">Đang đồng bộ dữ liệu giám sát...</p>
         </div>
-        
-        <!-- CÁC IFRAME ĐÃ BẬT SCROLLING & OVERFLOW ĐẦY ĐỦ -->
-        <iframe id="iframeDay" src="" class="dashboard-iframe hidden" scrolling="yes" allow="fullscreen"></iframe>
-        <iframe id="iframeWeek" src="" class="dashboard-iframe hidden" scrolling="yes" allow="fullscreen"></iframe>
-        <iframe id="iframeExtra1" src="" class="dashboard-iframe hidden" scrolling="yes" allow="fullscreen"></iframe>
-        <iframe id="iframeExtra2" src="" class="dashboard-iframe hidden" scrolling="yes" allow="fullscreen"></iframe>
+
+        <!-- Khung Grid hiển thị các Iframe -->
+        <div id="gridContainer" class="grid-viewer grid-layout-1"></div>
     </main>
 
-    <!-- MODAL CẤU HÌNH LINK (MẬT KHẨU 6868) -->
-    <div id="configModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-        <div class="glass-card w-full max-w-md rounded-xl border border-slate-800 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
-            <div class="bg-slate-900/90 px-4 py-3 border-b border-slate-800 flex justify-between items-center">
-                <h3 class="text-xs font-bold text-white flex items-center gap-2">
-                    <i class="fa-solid fa-shield-halved text-amber-400"></i> Cấu Hình Đường Dẫn Hệ Thống
-                </h3>
-                <button onclick="closeConfigModal()" class="text-slate-400 hover:text-white transition text-xs">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-            
-            <div class="p-4 space-y-3 overflow-y-auto">
-                <div id="authSection" class="space-y-3">
-                    <p class="text-[11px] text-slate-400">Vui lòng nhập mật khẩu quản trị để sửa link:</p>
-                    <div>
-                        <input type="password" id="passcodeField" placeholder="Nhập mật khẩu (6868)..." class="w-full bg-slate-900 border border-slate-700 text-xs rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-blue-500">
-                    </div>
-                    <button onclick="verifyPasscode()" class="w-full py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold rounded-lg transition shadow-md">Xác Nhận</button>
-                </div>
-
-                <div id="configFormSection" class="space-y-3 hidden">
-                    <p class="text-[11px] text-emerald-400 font-medium flex items-center gap-1">
-                        <i class="fa-solid fa-circle-check"></i> Xác thực thành công!
-                    </p>
-                    
-                    <div class="space-y-1.5">
-                        <label class="text-[10px] font-bold text-blue-400 uppercase">1. CSKH247 - Ngày</label>
-                        <input type="text" id="inputUrlDay" class="w-full bg-slate-900 border border-slate-700 text-xs rounded-lg px-2.5 py-1.5 text-slate-200 focus:border-blue-500 outline-none">
-                    </div>
-
-                    <div class="space-y-1.5">
-                        <label class="text-[10px] font-bold text-blue-400 uppercase">2. CSKH247 - Tuần/Tháng</label>
-                        <input type="text" id="inputUrlWeek" class="w-full bg-slate-900 border border-slate-700 text-xs rounded-lg px-2.5 py-1.5 text-slate-200 focus:border-blue-500 outline-none">
-                    </div>
-
-                    <div class="space-y-1.5 bg-slate-900/60 p-2.5 rounded-lg border border-slate-800">
-                        <label class="text-[10px] font-bold text-amber-400 uppercase">3. Chức Năng Bổ Sung 1</label>
-                        <input type="text" id="inputNameExtra1" placeholder="Tên hiển thị tab 3..." class="w-full bg-slate-900 border border-slate-700 text-xs rounded-lg px-2.5 py-1.5 text-slate-200 mb-1.5 outline-none">
-                        <input type="text" id="inputUrlExtra1" placeholder="Đường dẫn URL..." class="w-full bg-slate-900 border border-slate-700 text-xs rounded-lg px-2.5 py-1.5 text-slate-200 outline-none">
-                    </div>
-
-                    <div class="space-y-1.5 bg-slate-900/60 p-2.5 rounded-lg border border-slate-800">
-                        <label class="text-[10px] font-bold text-amber-400 uppercase">4. Chức Năng Bổ Sung 2</label>
-                        <input type="text" id="inputNameExtra2" placeholder="Tên hiển thị tab 4..." class="w-full bg-slate-900 border border-slate-700 text-xs rounded-lg px-2.5 py-1.5 text-slate-200 mb-1.5 outline-none">
-                        <input type="text" id="inputUrlExtra2" placeholder="Đường dẫn URL..." class="w-full bg-slate-900 border border-slate-700 text-xs rounded-lg px-2.5 py-1.5 text-slate-200 outline-none">
-                    </div>
-
-                    <div class="pt-2 flex justify-end gap-2">
-                        <button onclick="closeConfigModal()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs rounded-lg">Đóng</button>
-                        <button onclick="saveNewLinks()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-lg shadow-md">Lưu cấu hình</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- LOGIC TỰ ĐỘNG THU 2S VÀ ĐIỀU KHIỂN NÚT NHỎ -->
+    <!-- KỊCH BẢN ĐIỀU HÀNH TỔ HỢP -->
     <script>
-        const DEFAULT_URL_DAY = "https://cskh247-daily-chp-dashboard.vercel.app/";
-        const DEFAULT_URL_WEEK = "https://cskh-monthly-haiphong-dashboard.vercel.app/";
+        // CẤU HÌNH 4 ỨNG DỤNG HỆ THỐNG
+        const APPS = [
+            {
+                id: 'day',
+                name: 'CSKH Daily',
+                desc: 'Báo cáo ngày CSKH 24/7',
+                url: 'https://cskh247-daily-chp-dashboard.vercel.app/',
+                color: '#0284c7',
+                icon: 'fa-solid fa-calendar-day',
+                tag: 'Daily'
+            },
+            {
+                id: 'week',
+                name: 'CSKH Monthly',
+                desc: 'Tổng hợp Tuần & Tháng',
+                url: 'https://cskh-monthly-haiphong-dashboard.vercel.app/',
+                color: '#8b5cf6',
+                icon: 'fa-solid fa-calendar-week',
+                tag: 'Monthly'
+            },
+            {
+                id: 'berthing',
+                name: 'Berthing Window',
+                desc: 'Kế hoạch tàu & Cầu bến',
+                url: 'https://vesselcalldaily.vercel.app/',
+                color: '#0d9488',
+                icon: 'fa-solid fa-ferry',
+                tag: 'Berthing'
+            },
+            {
+                id: 'task',
+                name: 'Daily Task',
+                desc: 'Sự vụ & Nhiệm vụ thường nhật',
+                url: 'https://dsuktdvkhhpport.vercel.app/?utm_source=zalo&utm_medium=zalo&utm_campaign=zalo&zarsrc=30&gidzl=3m-IIq1b_Ye96Pj5J7Z-90GRdqLMBFykJqsP50f-g7KL6yaQ3okaT4GQmauDUF8k5KcK4sHyKbHOGcpt9m',
+                color: '#d97706',
+                icon: 'fa-solid fa-clipboard-check',
+                tag: 'Tasks'
+            }
+        ];
 
+        let currentLayout = 1;
+        let activeCardIndex = 0;
         let hideTimer = null;
-        const HIDE_DELAY = 2000; // 2 giây tự động thu gọn
+        const AUTO_HIDE_DELAY = 2500;
 
         const headerWrapper = document.getElementById('headerWrapper');
         const toggleIcon = document.getElementById('toggleIcon');
         const toggleBtn = document.getElementById('toggleHeaderBtn');
+        const toggleText = document.getElementById('toggleText');
+        const gridContainer = document.getElementById('gridContainer');
 
-        // Hàm mở Header
-        function expandHeader() {
-            clearTimeout(hideTimer);
-            headerWrapper.classList.remove('is-collapsed');
-            toggleIcon.className = 'fa-solid fa-chevron-up';
-            toggleBtn.title = 'Nhấp để thu gọn menu';
-        }
-
-        // Hàm đóng Header
-        function collapseHeader() {
-            clearTimeout(hideTimer);
-            headerWrapper.classList.add('is-collapsed');
-            toggleIcon.className = 'fa-solid fa-chevron-down';
-            toggleBtn.title = 'Nhấp để mở menu';
-        }
-
-        // Lên lịch đếm ngược 2s để tự đóng
-        function scheduleCollapse(delay = HIDE_DELAY) {
-            clearTimeout(hideTimer);
-            hideTimer = setTimeout(() => {
-                collapseHeader();
-            }, delay);
-        }
-
-        // Nút bấm mini chủ động chuyển đổi
-        function toggleHeaderManually() {
-            if (headerWrapper.classList.contains('is-collapsed')) {
-                expandHeader();
-                scheduleCollapse(3000); // Mở ra thì giữ 3s rồi tự thu lại nếu không bấm gì
-            } else {
-                collapseHeader();
-            }
-        }
-
-        // Tương tác chuột trên máy tính (Hover vào Header thì giữ nguyên, rời ra thì đếm 2s)
-        headerWrapper.addEventListener('mouseenter', () => {
-            clearTimeout(hideTimer);
-            expandHeader();
-        });
-        headerWrapper.addEventListener('mouseleave', () => {
-            scheduleCollapse(HIDE_DELAY);
-        });
-
-        // Xử lý riêng cho màn hình cảm ứng điện thoại (Touch / Tap)
-        document.addEventListener('touchstart', (e) => {
-            const isInsideHeader = headerWrapper.contains(e.target);
-            // Nếu chạm tay vào bất kỳ chỗ nào bên ngoài header khi đang mở -> Thu ngay
-            if (!isInsideHeader && !headerWrapper.classList.contains('is-collapsed')) {
-                collapseHeader();
-            } else if (isInsideHeader) {
-                // Nếu đang chạm vào bên trong thanh menu -> gia hạn thêm 2s
-                scheduleCollapse(HIDE_DELAY);
-            }
-        }, { passive: true });
-
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedDay = localStorage.getItem('cskh_url_day') || DEFAULT_URL_DAY;
-            const savedWeek = localStorage.getItem('cskh_url_week') || DEFAULT_URL_WEEK;
-            const savedExtra1Name = localStorage.getItem('cskh_name_extra1') || '';
-            const savedExtra1Url = localStorage.getItem('cskh_url_extra1') || '';
-            const savedExtra2Name = localStorage.getItem('cskh_name_extra2') || '';
-            const savedExtra2Url = localStorage.getItem('cskh_url_extra2') || '';
-
-            document.getElementById('iframeDay').src = savedDay;
-            document.getElementById('iframeWeek').src = savedWeek;
-
-            if (savedExtra1Url && savedExtra1Name) {
-                document.getElementById('label-extra1').innerText = savedExtra1Name;
-                document.getElementById('iframeExtra1').src = savedExtra1Url;
-                document.getElementById('tab-extra1').classList.remove('hidden');
-            }
-
-            if (savedExtra2Url && savedExtra2Name) {
-                document.getElementById('label-extra2').innerText = savedExtra2Name;
-                document.getElementById('iframeExtra2').src = savedExtra2Url;
-                document.getElementById('tab-extra2').classList.remove('hidden');
-            }
-
-            const lastActiveTab = localStorage.getItem('cskh_active_tab') || 'day';
-            switchView(lastActiveTab, false);
-
-            // Khi vừa tải trang trên điện thoại/máy tính: Hiển thị 2s để nhận diện rồi tự thu gọn
-            scheduleCollapse(2000);
-        });
-
-        function switchView(mode, saveState = true) {
-            const tabs = ['day', 'week', 'extra1', 'extra2'];
-            const targetIframe = document.getElementById(`iframe${mode.charAt(0).toUpperCase() + mode.slice(1)}`);
+        // Cập nhật Ngày giờ thực & Lời chúc theo ca trực
+        function updateLiveDateTime() {
+            const now = new Date();
             
-            if (!targetIframe || !targetIframe.src) {
-                if (mode === 'extra1' || mode === 'extra2') {
-                    alert("Chức năng này chưa được cấu hình đường dẫn link!");
-                    return;
-                }
+            const daysOfWeek = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+            const dayName = daysOfWeek[now.getDay()];
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+            document.getElementById('liveDate').innerText = `${dayName}, ${day}/${month}/${year}`;
+
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('liveClock').innerText = `${hours}:${minutes}:${seconds}`;
+
+            const currentHour = now.getHours();
+            const greetingTextEl = document.getElementById('greetingText');
+            const greetingIconEl = document.getElementById('greetingIcon');
+
+            if (currentHour >= 5 && currentHour < 11) {
+                greetingIconEl.className = 'fa-solid fa-cloud-sun text-amber-400';
+                greetingTextEl.innerText = 'Chúc ca sáng làm việc suôn sẻ, khai thác năng suất & an toàn! 🌅';
+            } else if (currentHour >= 11 && currentHour < 14) {
+                greetingIconEl.className = 'fa-solid fa-sun text-amber-400';
+                greetingTextEl.innerText = 'Chúc ca trực trưa phối hợp nhịp nhàng, thông suốt luồng hàng! ☀️';
+            } else if (currentHour >= 14 && currentHour < 18) {
+                greetingIconEl.className = 'fa-solid fa-ship text-cyan-400';
+                greetingTextEl.innerText = 'Chúc ca chiều đẩy nhanh tiến độ giải phóng tàu & dịch vụ! 🚢';
+            } else if (currentHour >= 18 && currentHour < 22) {
+                greetingIconEl.className = 'fa-solid fa-moon text-indigo-400';
+                greetingTextEl.innerText = 'Chúc ca tối giám sát chặt chẽ, cầu bến vận hành liên tục! ⚓';
+            } else {
+                greetingIconEl.className = 'fa-solid fa-compass text-teal-400';
+                greetingTextEl.innerText = 'Chúc ca đêm tỉnh táo, giữ vững nhịp độ khai thác 24/7 an toàn! 🌙';
+            }
+        }
+
+        // Render giao diện đa màn hình
+        function renderViewports() {
+            gridContainer.innerHTML = '';
+            gridContainer.className = `grid-viewer grid-layout-${currentLayout}`;
+
+            let activeApps = [];
+
+            if (currentLayout === 1) {
+                activeApps = [APPS[activeCardIndex]];
+            } else if (currentLayout === 2) {
+                const secondIndex = (activeCardIndex + 1) % APPS.length;
+                activeApps = [APPS[activeCardIndex], APPS[secondIndex]];
+            } else if (currentLayout === 3) {
+                const idx1 = activeCardIndex;
+                const idx2 = (activeCardIndex + 1) % APPS.length;
+                const idx3 = (activeCardIndex + 2) % APPS.length;
+                activeApps = [APPS[idx1], APPS[idx2], APPS[idx3]];
+            } else if (currentLayout === 4) {
+                activeApps = [...APPS];
             }
 
-            if (saveState) {
-                showLoading();
-                localStorage.setItem('cskh_active_tab', mode);
-            }
+            activeApps.forEach((app, idx) => {
+                const pane = document.createElement('div');
+                pane.className = `pane-container pane-slot-${idx}`;
+                const showHeader = currentLayout > 1;
+                
+                pane.innerHTML = `
+                    ${showHeader ? `
+                    <div class="pane-header">
+                        <div class="flex items-center gap-2 truncate">
+                            <i class="${app.icon}" style="color: ${app.color};"></i>
+                            <span class="font-bold text-slate-200 truncate">${app.name}</span>
+                            <span class="text-[9px] px-1.5 py-0.2 rounded font-bold text-slate-400 bg-slate-800">${app.tag}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="refreshIframe('iframe-${app.id}')" title="Tải lại khung này" class="text-slate-400 hover:text-white transition">
+                                <i class="fa-solid fa-rotate-right text-[10px]"></i>
+                            </button>
+                            <button onclick="zoomToSingle('${app.id}')" title="Xem 1 trang toàn màn hình" class="text-slate-400 hover:text-cyan-400 transition">
+                                <i class="fa-solid fa-maximize text-[10px]"></i>
+                            </button>
+                            <a href="${app.url}" target="_blank" title="Mở trang trong tab mới" class="text-slate-400 hover:text-emerald-400 transition">
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                            </a>
+                        </div>
+                    </div>` : ''}
+                    <iframe id="iframe-${app.id}" src="${app.url}" class="dashboard-iframe" allow="fullscreen" scrolling="yes"></iframe>
+                `;
+                gridContainer.appendChild(pane);
+            });
 
-            tabs.forEach(t => {
-                const btn = document.getElementById(`tab-${t}`);
-                const iframe = document.getElementById(`iframe${t.charAt(0).toUpperCase() + t.slice(1)}`);
-                if (t === mode) {
-                    if (btn) btn.className = "px-2.5 py-1 rounded-md text-[11px] font-medium transition flex items-center gap-1.5 bg-blue-600 text-white shadow-sm shrink-0";
-                    if (iframe) {
-                        iframe.classList.remove('hidden');
-                        updateStatusText(iframe.src);
+            updateCardHighlight();
+        }
+
+        // Chọn Thẻ chức năng
+        function selectPrimaryCard(index) {
+            activeCardIndex = index;
+            renderViewports();
+            scheduleCollapse(2000);
+        }
+
+        // Đánh dấu thẻ active
+        function updateCardHighlight() {
+            APPS.forEach((_, idx) => {
+                const card = document.getElementById(`card-${idx}`);
+                if (card) {
+                    if (idx === activeCardIndex) {
+                        card.classList.add('active');
+                    } else {
+                        card.classList.remove('active');
                     }
+                }
+            });
+        }
+
+        // Chuyển đổi Layout 1, 2, 3, 4
+        function setLayout(layoutNum) {
+            currentLayout = layoutNum;
+            [1, 2, 3, 4].forEach(n => {
+                const btn = document.getElementById(`btnLayout${n}`);
+                if (n === layoutNum) {
+                    btn.className = "px-2.5 py-1 rounded text-xs font-semibold transition flex items-center gap-1.5 bg-blue-600 text-white shadow";
                 } else {
-                    if (btn) btn.className = "px-2.5 py-1 rounded-md text-[11px] font-medium transition flex items-center gap-1.5 text-slate-400 hover:text-white shrink-0";
-                    if (iframe) iframe.classList.add('hidden');
+                    btn.className = "px-2.5 py-1 rounded text-xs font-semibold transition flex items-center gap-1.5 text-slate-400 hover:text-white hover:bg-slate-800";
                 }
             });
 
-            // Sau khi bấm chọn tab thì tự thu gọn sau 2s
+            showLoading();
+            renderViewports();
             scheduleCollapse(2000);
+        }
+
+        function zoomToSingle(appId) {
+            const index = APPS.findIndex(a => a.id === appId);
+            if (index !== -1) {
+                activeCardIndex = index;
+                setLayout(1);
+            }
+        }
+
+        function refreshIframe(iframeId) {
+            const iframe = document.getElementById(iframeId);
+            if (iframe) {
+                const currentSrc = iframe.src;
+                iframe.src = '';
+                setTimeout(() => { iframe.src = currentSrc; }, 100);
+            }
         }
 
         function showLoading() {
@@ -365,96 +620,86 @@
             overlay.style.display = 'flex';
             overlay.classList.remove('opacity-0');
             overlay.classList.add('opacity-100');
-
             setTimeout(() => {
                 overlay.classList.remove('opacity-100');
                 overlay.classList.add('opacity-0');
-                setTimeout(() => { overlay.style.display = 'none'; }, 250);
-            }, 450);
+                setTimeout(() => { overlay.style.display = 'none'; }, 200);
+            }, 350);
         }
 
-        function updateStatusText(url) {
-            try {
-                const parsedUrl = new URL(url);
-                document.getElementById('currentActiveLinkText').innerText = parsedUrl.hostname;
-            } catch(e) {
-                document.getElementById('currentActiveLinkText').innerText = "Đã kết nối";
-            }
-            document.getElementById('openNewTabBtn').href = url;
-        }
-
-        function openConfigModal() {
+        // Thu gọn & Mở Header
+        function expandHeader() {
             clearTimeout(hideTimer);
-            document.getElementById('passcodeField').value = '';
-            document.getElementById('authSection').classList.remove('hidden');
-            document.getElementById('configFormSection').classList.add('hidden');
-            document.getElementById('configModal').classList.remove('hidden');
+            headerWrapper.classList.remove('is-collapsed');
+            toggleIcon.className = 'fa-solid fa-chevron-up';
+            if (toggleText) toggleText.innerText = 'Thu gọn';
+            toggleBtn.title = 'Nhấp để thu gọn thanh menu';
         }
 
-        function closeConfigModal() {
-            document.getElementById('configModal').classList.add('hidden');
-            scheduleCollapse(1500);
+        function collapseHeader() {
+            clearTimeout(hideTimer);
+            headerWrapper.classList.add('is-collapsed');
+            toggleIcon.className = 'fa-solid fa-chevron-down';
+            if (toggleText) toggleText.innerText = 'Menu';
+            toggleBtn.title = 'Nhấp để mở thanh menu';
         }
 
-        function verifyPasscode() {
-            const pass = document.getElementById('passcodeField').value.trim();
-            if (pass === "6868") {
-                document.getElementById('authSection').classList.add('hidden');
-                document.getElementById('configFormSection').classList.remove('hidden');
-                
-                document.getElementById('inputUrlDay').value = document.getElementById('iframeDay').src;
-                document.getElementById('inputUrlWeek').value = document.getElementById('iframeWeek').src;
-                document.getElementById('inputNameExtra1').value = localStorage.getItem('cskh_name_extra1') || '';
-                document.getElementById('inputUrlExtra1').value = localStorage.getItem('cskh_url_extra1') || '';
-                document.getElementById('inputNameExtra2').value = localStorage.getItem('cskh_name_extra2') || '';
-                document.getElementById('inputUrlExtra2').value = localStorage.getItem('cskh_url_extra2') || '';
+        function scheduleCollapse(delay = AUTO_HIDE_DELAY) {
+            clearTimeout(hideTimer);
+            hideTimer = setTimeout(() => {
+                collapseHeader();
+            }, delay);
+        }
+
+        function toggleHeaderManually() {
+            if (headerWrapper.classList.contains('is-collapsed')) {
+                expandHeader();
+                scheduleCollapse(3500);
             } else {
-                alert("Mật khẩu bảo mật không chính xác! Vui lòng thử lại.");
+                collapseHeader();
             }
         }
 
-        function saveNewLinks() {
-            const newDay = document.getElementById('inputUrlDay').value.trim();
-            const newWeek = document.getElementById('inputUrlWeek').value.trim();
-            const newName1 = document.getElementById('inputNameExtra1').value.trim();
-            const newUrl1 = document.getElementById('inputUrlExtra1').value.trim();
-            const newName2 = document.getElementById('inputNameExtra2').value.trim();
-            const newUrl2 = document.getElementById('inputUrlExtra2').value.trim();
+        // Sự kiện chuột máy tính
+        headerWrapper.addEventListener('mouseenter', () => {
+            clearTimeout(hideTimer);
+            expandHeader();
+        });
+        headerWrapper.addEventListener('mouseleave', () => {
+            scheduleCollapse(AUTO_HIDE_DELAY);
+        });
 
-            if (!newDay || !newWeek) {
-                alert("Vui lòng không để trống các đường dẫn chính!");
-                return;
+        // Sự kiện chạm màn hình điện thoại / máy tính bảng
+        document.addEventListener('touchstart', (e) => {
+            const isInsideHeader = headerWrapper.contains(e.target);
+            if (!isInsideHeader && !headerWrapper.classList.contains('is-collapsed')) {
+                collapseHeader();
+            } else if (isInsideHeader) {
+                scheduleCollapse(AUTO_HIDE_DELAY);
             }
+        }, { passive: true });
 
-            localStorage.setItem('cskh_url_day', newDay);
-            localStorage.setItem('cskh_url_week', newWeek);
-            localStorage.setItem('cskh_name_extra1', newName1);
-            localStorage.setItem('cskh_url_extra1', newUrl1);
-            localStorage.setItem('cskh_name_extra2', newName2);
-            localStorage.setItem('cskh_url_extra2', newUrl2);
-
-            document.getElementById('iframeDay').src = newDay;
-            document.getElementById('iframeWeek').src = newWeek;
-
-            if (newUrl1 && newName1) {
-                document.getElementById('label-extra1').innerText = newName1;
-                document.getElementById('iframeExtra1').src = newUrl1;
-                document.getElementById('tab-extra1').classList.remove('hidden');
+        // Toàn màn hình F11
+        function toggleFullScreen() {
+            const icon = document.getElementById('fullscreenIcon');
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(() => {});
+                icon.className = 'fa-solid fa-compress';
             } else {
-                document.getElementById('tab-extra1').classList.add('hidden');
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                    icon.className = 'fa-solid fa-expand';
+                }
             }
-
-            if (newUrl2 && newName2) {
-                document.getElementById('label-extra2').innerText = newName2;
-                document.getElementById('iframeExtra2').src = newUrl2;
-                document.getElementById('tab-extra2').classList.remove('hidden');
-            } else {
-                document.getElementById('tab-extra2').classList.add('hidden');
-            }
-
-            closeConfigModal();
-            alert("Đã cập nhật cấu hình thành công!");
         }
+
+        // Khởi chạy khi DOM sẵn sàng
+        window.addEventListener('DOMContentLoaded', () => {
+            updateLiveDateTime();
+            setInterval(updateLiveDateTime, 1000);
+            renderViewports();
+            scheduleCollapse(2500);
+        });
     </script>
 </body>
 </html>
