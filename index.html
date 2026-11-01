@@ -420,7 +420,7 @@
                         </div>
                     </div>
 
-                    <!-- THẺ 4: CSKH Monthly (Có thể để trống và thiết lập bằng mã 6868) -->
+                    <!-- THẺ 4: TÙY CHỌN (Có thể để trống và thiết lập bằng mã 6868) -->
                     <div onclick="selectPrimaryCard('week')" id="card-week" 
                          style="--card-accent: #8b5cf6; --card-glow: rgba(139, 92, 246, 0.4);" 
                          class="nav-card bg-gradient-to-br from-indigo-950/80 via-slate-900/90 to-purple-950/70 p-2.5">
@@ -431,7 +431,7 @@
                             </div>
                             <div class="flex flex-col min-w-0">
                                 <span class="text-xs font-bold text-white tracking-wide truncate flex items-center gap-1.5">
-                                    CSKH Monthly <span id="badge-week-status" class="text-[9px] px-1 py-0.2 rounded font-normal">Hàng 2</span>
+                                    TÙY CHỌN <span id="badge-week-status" class="text-[9px] px-1 py-0.2 rounded font-normal">Hàng 2</span>
                                 </span>
                                 <span id="desc-week-status" class="text-[10px] text-purple-300/80 truncate">Tổng hợp Tuần & Tháng</span>
                             </div>
@@ -446,7 +446,7 @@
                     </span>
                     <div class="w-full overflow-hidden relative">
                         <div class="ticker-text">
-                            ⚙️ <b>Cấu hình CSKH Monthly:</b> Màn hình hiện đang để trống • Nhấp nút thiết lập tại ô màn hình hoặc biểu tượng bánh răng và nhập mã <b>6868</b> để kết nối liên kết mới. • 
+                            ⚙️ <b>Cấu hình TÙY CHỌN:</b> Màn hình hiện đang để trống • Nhấp nút thiết lập tại ô màn hình hoặc biểu tượng bánh răng và nhập mã <b>6868</b> để kết nối liên kết mới. • 
                             🚢 <b>Biểu tượng & Nền chìm:</b> Logo Cảng Hải Phòng nhận diện chính thức ở đầu trang • Hình nền đại dương với cánh chim hải âu và tàu container chìm to mờ bao quát không gian làm việc. • 
                             💾 <b>Lưu tự động:</b> Mọi thao tác chọn bố cục, đổi chỗ ô và ghim header được lưu vĩnh viễn, khi tải lại trang sẽ giữ nguyên 100%.
                         </div>
@@ -520,7 +520,7 @@
         <div class="bg-slate-900/95 border border-slate-700/80 w-full max-w-md rounded-2xl shadow-2xl overflow-hidden flex flex-col">
             <div class="bg-slate-950/80 px-5 py-3.5 border-b border-slate-800 flex justify-between items-center">
                 <h3 class="text-xs font-bold text-white flex items-center gap-2 tracking-wide uppercase">
-                    <i class="fa-solid fa-shield-halved text-amber-400"></i> Thiết Lập Đường Dẫn CSKH Monthly
+                    <i class="fa-solid fa-shield-halved text-amber-400"></i> Thiết Lập Đường Dẫn TÙY CHỌN
                 </h3>
                 <button onclick="closeSetupModal()" class="text-slate-400 hover:text-white transition text-xs">
                     <i class="fa-solid fa-xmark text-sm"></i>
@@ -564,7 +564,7 @@
 
     <!-- KỊCH BẢN ĐIỀU HÀNH TỔ HỢP & GHI NHỚ TRẠNG THÁI LOCALSTORAGE -->
     <script>
-        // CẤU HÌNH THÔNG TIN 4 ỨNG DỤNG (CSKH Monthly mặc định để trống "")
+        // CẤU HÌNH THÔNG TIN 4 ỨNG DỤNG (TÙY CHỌN mặc định để trống "")
         const APPS_DICT = {
             'task': {
                 id: 'task',
@@ -595,7 +595,7 @@
             },
             'week': {
                 id: 'week',
-                name: 'CSKH Monthly',
+                name: 'TÙY CHỌN',
                 desc: 'Tổng hợp Tuần & Tháng',
                 url: '', // ĐÃ BỎ LINK MẶC ĐỊNH, ĐỂ TRỐNG
                 color: '#8b5cf6',
@@ -663,7 +663,7 @@
                     isPinned = true;
                 }
 
-                // Đọc đường dẫn CSKH Monthly đã lưu (nếu có cấu hình trước đó)
+                // Đọc đường dẫn TÙY CHỌN đã lưu (nếu có cấu hình trước đó)
                 const savedWeekUrl = localStorage.getItem('chp_url_week');
                 if (savedWeekUrl) {
                     APPS_DICT['week'].url = savedWeekUrl;
@@ -808,7 +808,7 @@
                             <div class="w-16 h-16 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-3 shadow-[0_0_20px_rgba(168,85,247,0.15)]">
                                 <i class="fa-solid fa-chart-line text-2xl"></i>
                             </div>
-                            <h3 class="text-sm font-bold text-slate-100 uppercase tracking-wider mb-1">Màn hình CSKH Monthly đang để trống</h3>
+                            <h3 class="text-sm font-bold text-slate-100 uppercase tracking-wider mb-1">Màn hình TÙY CHỌN đang để trống</h3>
                             <p class="text-xs text-slate-400 max-w-sm mb-4 leading-relaxed">
                                 Chức năng này hiện chưa được gán đường dẫn web. Khi có liên kết mới, nhấp nút thiết lập bên dưới và nhập mã bảo mật <span class="text-amber-300 font-bold">6868</span>.
                             </p>
@@ -941,7 +941,7 @@
                 }
             });
 
-            // Cập nhật trạng thái hiển thị của thẻ CSKH Monthly
+            // Cập nhật trạng thái hiển thị của thẻ TÙY CHỌN
             const badgeWeek = document.getElementById('badge-week-status');
             const descWeek = document.getElementById('desc-week-status');
             if (badgeWeek && descWeek) {
