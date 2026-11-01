@@ -189,18 +189,18 @@
             background: #040711;
         }
 
-        /* LỚP PHỦ NỀN CHÌM NGHỆ THUẬT: TÀU CONTAINER & HẢI ÂU KHÔNG BỊ IFRAME CHE */
+        /* LỚP PHỦ NỀN CHÌM NGHỆ THUẬT */
         .grand-watermark-overlay {
             position: absolute;
             inset: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            pointer-events: none; /* Cho phép thao tác chuột xuyên qua vào dashboard */
+            pointer-events: none;
             user-select: none;
-            z-index: 25; /* Nổi chìm phía trên để luôn nhìn thấy */
+            z-index: 25;
             overflow: hidden;
-            opacity: 0.045; /* Độ mờ vừa vặn tinh tế */
+            opacity: 0.045;
         }
         .grand-watermark-svg {
             width: 85vw;
@@ -255,32 +255,23 @@
                         <!-- LOGO CHÍNH THỨC CẢNG HẢI PHÒNG (VECTOR SVG NGUYÊN BẢN CHUẨN NÉT) -->
                         <div class="flex items-center shrink-0">
                             <svg class="h-11 sm:h-12 w-auto drop-shadow-[0_0_12px_rgba(56,189,248,0.5)] transition-transform hover:scale-105" viewBox="0 0 260 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Chữ Since 1874 phía trên -->
                                 <text x="130" y="32" font-family="'Plus Jakarta Sans', sans-serif" font-size="28" font-weight="900" fill="#38bdf8" text-anchor="middle" letter-spacing="1">Since 1874</text>
-                                <!-- Khung bầu dục ngoài -->
                                 <ellipse cx="130" cy="135" rx="124" ry="94" fill="#0263b8" stroke="#ffffff" stroke-width="4"/>
                                 <ellipse cx="130" cy="135" rx="114" ry="84" fill="#0263b8" stroke="#ffffff" stroke-width="2.5" opacity="0.9"/>
-                                <!-- Ngọn Hải Đăng chiếu sáng -->
                                 <path d="M168 68 L174 68 L176 118 L166 118 Z" fill="#ffffff"/>
                                 <rect x="167" y="62" width="8" height="6" rx="1" fill="#ffffff"/>
                                 <polygon points="166,80 128,74 128,86" fill="#ffffff" opacity="0.95"/>
                                 <polygon points="176,80 214,74 214,86" fill="#ffffff" opacity="0.95"/>
-                                <!-- Cần cẩu gàu ngoạm trên chữ C -->
                                 <path d="M72 74 L84 46 L94 46 L106 74 Z" fill="none" stroke="#ffffff" stroke-width="4"/>
                                 <rect x="68" y="74" width="42" height="28" rx="5" fill="#ffffff"/>
                                 <polygon points="89,80 81,88 84,97 94,97 97,88" fill="#0263b8"/>
-                                <!-- Cụm chữ CHP và Mũi tàu cách điệu -->
                                 <path d="M42 142 C42 120, 56 108, 78 108 C96 108, 107 116, 110 126 L94 130 C92 124, 87 121, 78 121 C67 121, 58 128, 58 142 C58 156, 67 163, 78 163 C87 163, 92 160, 94 154 L110 158 C107 168, 96 176, 78 176 C56 176, 42 164, 42 142 Z" fill="#ffffff"/>
-                                <!-- Chữ H -->
                                 <rect x="126" y="110" width="16" height="64" fill="#ffffff"/>
                                 <rect x="156" y="110" width="16" height="64" fill="#ffffff"/>
                                 <rect x="140" y="134" width="18" height="15" fill="#ffffff"/>
-                                <!-- Chữ P (Mũi tàu vươn sóng) -->
                                 <path d="M182 110 L226 113 L204 150 L212 174 L182 174 Z" fill="#ffffff"/>
                                 <circle cx="197" cy="132" r="6" fill="#0263b8"/>
-                                <!-- Vạch ngăn đáy -->
                                 <line x1="40" y1="184" x2="220" y2="184" stroke="#ffffff" stroke-width="3"/>
-                                <!-- Dòng chữ PORT OF HAI PHONG -->
                                 <text x="130" y="260" font-family="'Plus Jakarta Sans', sans-serif" font-size="25" font-weight="900" fill="#38bdf8" text-anchor="middle" letter-spacing="1.5">PORT OF HAI PHONG</text>
                                 <text x="238" y="246" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="bold" fill="#38bdf8">®</text>
                             </svg>
@@ -429,7 +420,7 @@
                         </div>
                     </div>
 
-                    <!-- THẺ 4: CSKH Monthly -->
+                    <!-- THẺ 4: CSKH Monthly (Có thể để trống và thiết lập bằng mã 6868) -->
                     <div onclick="selectPrimaryCard('week')" id="card-week" 
                          style="--card-accent: #8b5cf6; --card-glow: rgba(139, 92, 246, 0.4);" 
                          class="nav-card bg-gradient-to-br from-indigo-950/80 via-slate-900/90 to-purple-950/70 p-2.5">
@@ -440,9 +431,9 @@
                             </div>
                             <div class="flex flex-col min-w-0">
                                 <span class="text-xs font-bold text-white tracking-wide truncate flex items-center gap-1.5">
-                                    CSKH Monthly <span class="text-[9px] px-1 py-0.2 rounded bg-purple-500/30 text-purple-300 font-normal">Hàng 2</span>
+                                    CSKH Monthly <span id="badge-week-status" class="text-[9px] px-1 py-0.2 rounded font-normal">Hàng 2</span>
                                 </span>
-                                <span class="text-[10px] text-purple-300/80 truncate">Tổng hợp Tuần & Tháng</span>
+                                <span id="desc-week-status" class="text-[10px] text-purple-300/80 truncate">Tổng hợp Tuần & Tháng</span>
                             </div>
                         </div>
                     </div>
@@ -455,9 +446,9 @@
                     </span>
                     <div class="w-full overflow-hidden relative">
                         <div class="ticker-text">
-                            🚢 <b>Biểu tượng & Nền chìm:</b> Logo Cảng Hải Phòng nhận diện chính thức ở đầu trang • Hình nền đại dương với cánh chim hải âu và tàu container chìm to mờ bao quát toàn bộ không gian làm việc. • 
-                            💾 <b>Lưu tự động:</b> Mọi thao tác chọn bố cục, đổi chỗ ô và ghim header được lưu vĩnh viễn, khi tải lại trang sẽ giữ nguyên 100%. • 
-                            ✨ <b>Đổi chỗ cửa sổ:</b> Dùng menu chọn hoặc mũi tên ◀ ▶ trên góc mỗi ô để tráo đổi vị trí bất kỳ lúc nào.
+                            ⚙️ <b>Cấu hình CSKH Monthly:</b> Màn hình hiện đang để trống • Nhấp nút thiết lập tại ô màn hình hoặc biểu tượng bánh răng và nhập mã <b>6868</b> để kết nối liên kết mới. • 
+                            🚢 <b>Biểu tượng & Nền chìm:</b> Logo Cảng Hải Phòng nhận diện chính thức ở đầu trang • Hình nền đại dương với cánh chim hải âu và tàu container chìm to mờ bao quát không gian làm việc. • 
+                            💾 <b>Lưu tự động:</b> Mọi thao tác chọn bố cục, đổi chỗ ô và ghim header được lưu vĩnh viễn, khi tải lại trang sẽ giữ nguyên 100%.
                         </div>
                     </div>
                 </div>
@@ -475,53 +466,40 @@
     <!-- MAIN VIEWER - KHÔNG GIAN LƯỚI ĐA CỬA SỔ HIỂN THỊ -->
     <main id="mainViewer" class="w-full h-full relative overflow-hidden bg-slate-950">
         
-        <!-- HÌNH ẢNH NỀN CHÌM NỔI: CÁNH CHIM HẢI ÂU VÀ TÀU CONTAINER TO MỜ (KHÔNG BỊ IFRAME CHE KHUẤT) -->
+        <!-- HÌNH ẢNH NỀN CHÌM NỔI: CÁNH CHIM HẢI ÂU VÀ TÀU CONTAINER TO MỜ -->
         <div class="grand-watermark-overlay">
             <svg class="grand-watermark-svg" viewBox="0 0 1000 550" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- Đàn chim hải âu sải cánh trên nền trời -->
                 <g stroke="#38bdf8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none">
                     <path d="M120 120 Q180 70 240 120 Q300 70 360 120" opacity="0.9" />
                     <path d="M300 60 Q340 20 380 60 Q420 20 460 60" opacity="0.75" />
                     <path d="M680 80 Q730 35 780 80 Q830 35 880 80" opacity="0.85" />
                     <path d="M520 140 Q550 110 580 140 Q610 110 640 140" opacity="0.65" />
                 </g>
-
-                <!-- Tàu Container cỡ lớn chuyên chở khối hàng TEU -->
                 <g fill="#38bdf8" opacity="0.85">
-                    <!-- Thân tàu Container -->
                     <path d="M100 420 L210 420 L290 280 L760 280 L880 420 L940 420 L900 480 L160 480 Z" />
-                    <!-- Ca-bin lái và đài radar hàng hải -->
                     <path d="M780 180 H830 V280 H770 Z" />
                     <rect x="790" y="140" width="10" height="40" />
                     <line x1="770" y1="140" x2="820" y2="140" stroke="#38bdf8" stroke-width="4" />
                     <rect x="785" y="200" width="40" height="15" fill="#080d1a" />
-                    
-                    <!-- Khối Container xếp tầng tầng lớp lớp -->
                     <rect x="300" y="225" width="80" height="50" rx="3" />
                     <rect x="390" y="225" width="80" height="50" rx="3" />
                     <rect x="480" y="225" width="80" height="50" rx="3" />
                     <rect x="570" y="225" width="80" height="50" rx="3" />
                     <rect x="660" y="225" width="80" height="50" rx="3" />
-
                     <rect x="340" y="170" width="80" height="50" rx="3" />
                     <rect x="430" y="170" width="80" height="50" rx="3" />
                     <rect x="520" y="170" width="80" height="50" rx="3" />
                     <rect x="610" y="170" width="80" height="50" rx="3" />
-
                     <rect x="400" y="115" width="80" height="50" rx="3" />
                     <rect x="490" y="115" width="80" height="50" rx="3" />
                     <rect x="580" y="115" width="70" height="50" rx="3" />
                 </g>
-
-                <!-- Cần cẩu bờ STS tại cầu bến -->
                 <g stroke="#38bdf8" stroke-width="5" opacity="0.6">
                     <line x1="160" y1="280" x2="200" y2="80" />
                     <line x1="240" y1="280" x2="200" y2="80" />
                     <line x1="150" y1="120" x2="450" y2="120" stroke-width="7" />
                     <line x1="280" y1="120" x2="280" y2="190" stroke-width="3" stroke-dasharray="6 6" />
                 </g>
-
-                <!-- Sóng biển đại dương cuộn trào dưới lườn tàu -->
                 <path d="M50 495 C180 470, 260 520, 390 495 C520 470, 630 520, 760 495 C860 475, 920 510, 970 495" stroke="#38bdf8" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.8" />
                 <path d="M30 520 C160 500, 240 540, 370 520 C500 500, 610 540, 740 520 C840 505, 910 535, 990 520" stroke="#38bdf8" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.5" />
             </svg>
@@ -537,9 +515,56 @@
         <div id="gridContainer" class="grid-viewer grid-layout-4"></div>
     </main>
 
+    <!-- MODAL THIẾT LẬP ĐƯỜNG DẪN BẢO MẬT (MÃ 6868) -->
+    <div id="setupModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900/95 border border-slate-700/80 w-full max-w-md rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+            <div class="bg-slate-950/80 px-5 py-3.5 border-b border-slate-800 flex justify-between items-center">
+                <h3 class="text-xs font-bold text-white flex items-center gap-2 tracking-wide uppercase">
+                    <i class="fa-solid fa-shield-halved text-amber-400"></i> Thiết Lập Đường Dẫn CSKH Monthly
+                </h3>
+                <button onclick="closeSetupModal()" class="text-slate-400 hover:text-white transition text-xs">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+            
+            <div class="p-5 space-y-4">
+                <div class="space-y-1.5">
+                    <label class="text-[11px] font-bold text-amber-400 uppercase flex items-center gap-1.5">
+                        <i class="fa-solid fa-key"></i> 1. Mã Xác Thực Quản Trị
+                    </label>
+                    <input type="password" id="modalPasscode" placeholder="Nhập mã xác thực (6868)..." class="w-full bg-slate-950 border border-slate-700 text-xs rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400">
+                </div>
+
+                <div class="space-y-1.5">
+                    <label class="text-[11px] font-bold text-purple-400 uppercase flex items-center gap-1.5">
+                        <i class="fa-solid fa-link"></i> 2. Đường Dẫn URL Dashboard Mới
+                    </label>
+                    <input type="text" id="modalUrl" placeholder="https://..." class="w-full bg-slate-950 border border-slate-700 text-xs rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400">
+                    <p class="text-[10px] text-slate-400 italic">Dán liên kết dashboard Vercel, Looker Studio, PowerBI hoặc trang web mới vào đây.</p>
+                </div>
+
+                <div id="modalErrorMsg" class="text-xs text-rose-400 font-medium hidden flex items-center gap-1.5 bg-rose-500/10 p-2 rounded border border-rose-500/20">
+                    <i class="fa-solid fa-circle-exclamation"></i> <span id="modalErrorText">Mã xác thực không chính xác!</span>
+                </div>
+
+                <div class="pt-2 flex items-center justify-between gap-2">
+                    <button onclick="clearSetupUrl()" type="button" class="px-3 py-1.5 bg-rose-950/60 hover:bg-rose-900 border border-rose-700/60 text-rose-300 text-xs font-semibold rounded-lg transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-trash-can"></i> Để trống màn hình
+                    </button>
+                    <div class="flex items-center gap-2">
+                        <button onclick="closeSetupModal()" type="button" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold rounded-lg transition">Hủy</button>
+                        <button onclick="saveSetupUrl()" type="button" class="px-4 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg shadow-md transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-check"></i> Lưu cấu hình
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- KỊCH BẢN ĐIỀU HÀNH TỔ HỢP & GHI NHỚ TRẠNG THÁI LOCALSTORAGE -->
     <script>
-        // CẤU HÌNH THÔNG TIN 4 ỨNG DỤNG
+        // CẤU HÌNH THÔNG TIN 4 ỨNG DỤNG (CSKH Monthly mặc định để trống "")
         const APPS_DICT = {
             'task': {
                 id: 'task',
@@ -572,7 +597,7 @@
                 id: 'week',
                 name: 'CSKH Monthly',
                 desc: 'Tổng hợp Tuần & Tháng',
-                url: 'https://cskh-monthly-haiphong-dashboard.vercel.app/',
+                url: '', // ĐÃ BỎ LINK MẶC ĐỊNH, ĐỂ TRỐNG
                 color: '#8b5cf6',
                 icon: 'fa-solid fa-calendar-week',
                 tag: 'Monthly (Hàng 2)'
@@ -598,6 +623,7 @@
         const pinHeaderBtn = document.getElementById('pinHeaderBtn');
         const pinIcon = document.getElementById('pinIcon');
         const pinText = document.getElementById('pinText');
+        const setupModal = document.getElementById('setupModal');
 
         // ================= LƯU TRỮ VÀ KHÔI PHỤC TRẠNG THÁI LOCALSTORAGE =================
         function saveAppState() {
@@ -606,6 +632,7 @@
                 localStorage.setItem('chp_saved_order', JSON.stringify(currentOrder));
                 localStorage.setItem('chp_saved_active_card', activeCardId);
                 localStorage.setItem('chp_saved_pinned', isPinned ? 'true' : 'false');
+                localStorage.setItem('chp_url_week', APPS_DICT['week'].url || '');
             } catch (err) {
                 console.warn('Không thể lưu vào localStorage:', err);
             }
@@ -635,9 +662,73 @@
                 if (savedPinned === 'true') {
                     isPinned = true;
                 }
+
+                // Đọc đường dẫn CSKH Monthly đã lưu (nếu có cấu hình trước đó)
+                const savedWeekUrl = localStorage.getItem('chp_url_week');
+                if (savedWeekUrl) {
+                    APPS_DICT['week'].url = savedWeekUrl;
+                } else {
+                    APPS_DICT['week'].url = '';
+                }
             } catch (err) {
                 console.warn('Không thể đọc từ localStorage:', err);
             }
+        }
+
+        // ================= XỬ LÝ MODAL CẤU HÌNH LIÊN KẾT (MÃ 6868) =================
+        function openSetupModal(appId = 'week') {
+            isHeaderHovered = true;
+            clearTimeout(hideTimer);
+            document.getElementById('modalPasscode').value = '';
+            document.getElementById('modalUrl').value = APPS_DICT[appId].url || '';
+            document.getElementById('modalErrorMsg').classList.add('hidden');
+            setupModal.classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById('modalPasscode').focus();
+            }, 100);
+        }
+
+        function closeSetupModal() {
+            setupModal.classList.add('hidden');
+            isHeaderHovered = false;
+            scheduleCollapse(1500);
+        }
+
+        function saveSetupUrl() {
+            const pass = document.getElementById('modalPasscode').value.trim();
+            const newUrl = document.getElementById('modalUrl').value.trim();
+            const errorEl = document.getElementById('modalErrorMsg');
+            const errorText = document.getElementById('modalErrorText');
+
+            if (pass !== '6868') {
+                errorText.innerText = 'Mã xác thực không chính xác! Vui lòng nhập đúng 6868.';
+                errorEl.classList.remove('hidden');
+                return;
+            }
+
+            APPS_DICT['week'].url = newUrl;
+            saveAppState();
+            closeSetupModal();
+            showLoading();
+            renderViewports();
+        }
+
+        function clearSetupUrl() {
+            const pass = document.getElementById('modalPasscode').value.trim();
+            const errorEl = document.getElementById('modalErrorMsg');
+            const errorText = document.getElementById('modalErrorText');
+
+            if (pass !== '6868') {
+                errorText.innerText = 'Mã xác thực không chính xác! Vui lòng nhập đúng 6868.';
+                errorEl.classList.remove('hidden');
+                return;
+            }
+
+            APPS_DICT['week'].url = '';
+            saveAppState();
+            closeSetupModal();
+            showLoading();
+            renderViewports();
         }
 
         // ================= CẬP NHẬT ĐỒNG HỒ & LỜI CHÚC THEO CA =================
@@ -706,6 +797,30 @@
                     selectOptionsHtml += `<option value="${idKey}" ${selected}>${item.name}</option>`;
                 });
 
+                // Kiểm tra xem ô này có đường dẫn hay đang để trống
+                const isUrlEmpty = !app.url || app.url.trim() === '';
+
+                let bodyContentHtml = '';
+                if (isUrlEmpty) {
+                    // Màn hình để trống + Nút setup kết hợp mã 6868
+                    bodyContentHtml = `
+                        <div class="w-full h-full flex flex-col items-center justify-center p-6 text-center bg-slate-950/80 backdrop-blur-sm border border-dashed border-slate-800/80 rounded-b-lg">
+                            <div class="w-16 h-16 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-3 shadow-[0_0_20px_rgba(168,85,247,0.15)]">
+                                <i class="fa-solid fa-chart-line text-2xl"></i>
+                            </div>
+                            <h3 class="text-sm font-bold text-slate-100 uppercase tracking-wider mb-1">Màn hình CSKH Monthly đang để trống</h3>
+                            <p class="text-xs text-slate-400 max-w-sm mb-4 leading-relaxed">
+                                Chức năng này hiện chưa được gán đường dẫn web. Khi có liên kết mới, nhấp nút thiết lập bên dưới và nhập mã bảo mật <span class="text-amber-300 font-bold">6868</span>.
+                            </p>
+                            <button onclick="openSetupModal('${app.id}')" class="px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-bold rounded-lg shadow-lg shadow-purple-900/40 flex items-center gap-2 transition hover:scale-105 active:scale-95 border border-purple-400/30">
+                                <i class="fa-solid fa-gear text-amber-300"></i> Thiết lập đường dẫn (Mã 6868)
+                            </button>
+                        </div>
+                    `;
+                } else {
+                    bodyContentHtml = `<iframe id="iframe-${app.id}" src="${app.url}" class="dashboard-iframe" allow="fullscreen" scrolling="yes"></iframe>`;
+                }
+
                 pane.innerHTML = `
                     ${showHeader ? `
                     <div class="pane-header">
@@ -727,18 +842,27 @@
                         </div>
 
                         <div class="flex items-center gap-2">
+                            ${app.id === 'week' ? `
+                            <button onclick="openSetupModal('week')" title="Cài đặt URL (Mã 6868)" class="text-amber-400 hover:text-amber-300 transition">
+                                <i class="fa-solid fa-gear text-[11px]"></i>
+                            </button>` : ''}
+                            
+                            ${!isUrlEmpty ? `
                             <button onclick="refreshIframe('iframe-${app.id}')" title="Tải lại khung này" class="text-slate-400 hover:text-white transition">
                                 <i class="fa-solid fa-rotate-right text-[11px]"></i>
-                            </button>
+                            </button>` : ''}
+
                             <button onclick="zoomToSingle('${app.id}')" title="Xem 1 trang toàn màn hình" class="text-slate-400 hover:text-cyan-400 transition">
                                 <i class="fa-solid fa-maximize text-[11px]"></i>
                             </button>
+
+                            ${!isUrlEmpty ? `
                             <a href="${app.url}" target="_blank" title="Mở trang trong tab mới" class="text-slate-400 hover:text-emerald-400 transition">
                                 <i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i>
-                            </a>
+                            </a>` : ''}
                         </div>
                     </div>` : ''}
-                    <iframe id="iframe-${app.id}" src="${app.url}" class="dashboard-iframe" allow="fullscreen" scrolling="yes"></iframe>
+                    ${bodyContentHtml}
                 `;
                 gridContainer.appendChild(pane);
             });
@@ -816,6 +940,23 @@
                     }
                 }
             });
+
+            // Cập nhật trạng thái hiển thị của thẻ CSKH Monthly
+            const badgeWeek = document.getElementById('badge-week-status');
+            const descWeek = document.getElementById('desc-week-status');
+            if (badgeWeek && descWeek) {
+                if (!APPS_DICT['week'].url) {
+                    badgeWeek.innerText = 'Trống (6868)';
+                    badgeWeek.className = 'text-[9px] px-1 py-0.2 rounded bg-amber-500/30 text-amber-300 font-bold';
+                    descWeek.innerText = 'Chưa cài link • Bấm để thiết lập';
+                    descWeek.className = 'text-[10px] text-amber-300/90 truncate';
+                } else {
+                    badgeWeek.innerText = 'Hàng 2';
+                    badgeWeek.className = 'text-[9px] px-1 py-0.2 rounded bg-purple-500/30 text-purple-300 font-normal';
+                    descWeek.innerText = 'Tổng hợp Tuần & Tháng';
+                    descWeek.className = 'text-[10px] text-purple-300/80 truncate';
+                }
+            }
         }
 
         function setLayout(layoutNum) {
